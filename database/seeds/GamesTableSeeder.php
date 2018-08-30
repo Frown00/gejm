@@ -58,7 +58,7 @@ class GamesTableSeeder extends Seeder
         $game->title = 'Half Life 2';
         $game->developer = 'Valve';
         $game->publisher = 'Valve';
-        $game->main_genre = 'FPS';
+        $game->main_genre = 'RPG';
         $game->release_year = '2007';   
         $game->release_date = '2007-01-02';   
         $game->game_time = 50;
@@ -73,6 +73,15 @@ class GamesTableSeeder extends Seeder
         $game->walkthrough = 'https://www.youtube.com/watch?v=91uWeqArrok';
         $game->slug = str_slug($game->title);
         $game->save();
+
+        $fps = App\Genre::where('name', 'fps')->first();
+        $rpg = App\Genre::where('name', 'rpg')->first();
+        $game->genres()->sync([$rpg->id, $fps->id]);
+        //$game->genres()->attach([1, 2]);
+        
+        $pc = App\Platform::where('name', 'pc')->first();
+        $xbox360 = App\Platform::where('name', 'xbox 360')->first();
+        $game->platforms()->sync([$pc->id, $xbox360->id]);
         
     }
 }

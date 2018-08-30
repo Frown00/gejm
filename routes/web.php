@@ -11,7 +11,4 @@
 |
 */
 
-Route::get('/', [
-    'uses' => 'IndexController@index',
-    'as' => 'index.index'
-]);
+Route::view('/{path?}', 'app');
