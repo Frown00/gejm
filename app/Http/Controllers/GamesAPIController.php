@@ -25,14 +25,13 @@ class GamesAPIController extends Controller
             $game['image_box'] = base64_encode($game['image_box']);
         }
 
-        return $games;
+        return response($games, 200)->header('Content-Type', 'application/json');
     }
 
     public function show($slug)
     {   
         $game = Game::where('slug', $slug)->first();
         
-
         $genres = $game->genres()->select('name', 'description')->get();
         $platforms = $game->platforms()->select('name', 'company')->get();
         $ratings = $game->ratings()->select('name', 'rating')->get();

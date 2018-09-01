@@ -1,8 +1,8 @@
-import axios from 'axios';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class GamesList extends Component {
+
+class GamesIndex extends Component {
     constructor() {
         super();
         this.state = {
@@ -13,7 +13,7 @@ class GamesList extends Component {
     }
 
     componentDidMount() {
-        fetch('http://gejm.pl/api/games')
+        fetch('http://gejm.pl/games')
             .then(response => response.json())
             .then(
                 (result) => {
@@ -48,22 +48,16 @@ class GamesList extends Component {
                         {games.map(game => (
                             <Link
                                 className='list-group-item list-group-item-action d-flex justify-content-between align-items-center'
-                                to={`/${game.slug}`}
+                                to={`dashboard/${game.slug}`}
                                 key={game.id} >
                                 
                                 <div>
-                                    <h5>{game.title}</h5>
-                                    <h6>{game.developer}</h6>
-                                    <h6>{game.publisher}</h6>
+                                    <h5>{game.id}</h5>
+                                    
+                                    
                                 </div>
                                 <div>
-                                    {(game.genres).map((genre, index) => (
-                                        
-                                    <span key={index} className='badge badge-primary badge-pill'>
-                                        {genre.name}
-                                    </span>
-                                                 
-                                    ))}
+                                    <h5>{game.title}</h5>
                                 </div>
                                     
                             </Link>
@@ -76,4 +70,4 @@ class GamesList extends Component {
     }
 }
 
-export default GamesList;
+export default GamesIndex;

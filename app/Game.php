@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Game extends Model
 {
     protected $hidden = ['pivot'];
+    protected $fillable = ['title', 'developer', 'publisher', 'main_genre', 'release_year', 'release_date',
+                            'game_time', 'popularity', 'difficulty','rating_avg', 'requirements', 'requirements_detail',
+                            'age_rating', 'description', 'gameplay', 'walkthrough', 'slug'];
     
     public function genres() {
         return $this->belongsToMany('App\Genre', 'game_genre', 'game_id', 'genre_id');

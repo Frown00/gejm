@@ -11,4 +11,35 @@
 |
 */
 
-Route::view('/{path?}', 'app');
+Route::view('/', 'app');
+
+Route::middleware('auth')->group(function() {
+    Route::get('/dashboard', [
+        'uses'=> 'DashboardController@index',
+        'as'=> 'dashboard.index'
+    ]);
+
+    Route::get('/dashboard/create', [
+        'uses'=> 'DashboardController@index',
+        'as'=> 'dashboard.index'
+    ]);
+
+    Route::get('/games', [
+        'uses'=> 'GamesController@index',
+        'as'=> 'games.index'
+    ]);
+
+    Route::post('/games', [
+        'uses'=> 'GamesController@store',
+        'as'=> 'games.store'
+    ]);
+});
+
+
+
+
+Auth::routes();
+
+Route::get('register', function() {
+    return redirect('/');
+});

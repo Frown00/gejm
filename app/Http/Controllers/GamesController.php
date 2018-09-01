@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\GamesRequest;
 use App\Game;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Debugbar;
 
-class IndexController extends Controller
+class GamesController extends Controller
 {
     
     public function index() {
@@ -27,7 +29,15 @@ class IndexController extends Controller
             $game['image_box'] = base64_encode($game['image_box']);
         }
 
-        return view('welcome', compact('games'));
+        return response($games, 200)->header('Content-Type', 'application/json');
+    }
+
+    public function store(GamesRequest $request) {
+        
+        //dd($request->all());
+        $game = Game::create($request->all());
+        
+        return response('Gra została dodana', 201);
     }
 }
 
