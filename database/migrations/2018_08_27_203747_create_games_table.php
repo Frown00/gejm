@@ -28,8 +28,11 @@ class CreateGamesTable extends Migration
             $table->text('requirements_detail')->nullable();
             $table->double('rating_avg', 3, 2)->default(0);
             $table->integer('age_rating')->default(3);
+            $table->integer('minimum_gamers')->default(1);
+            $table->integer('maximum_gamers')->default(1);
             
             $table->text('description')->nullable();
+            $table->text('warnings')->nullable();
             $table->string('gameplay')->default('');
             $table->string('walkthrough')->default('');
             $table->string('slug', 255);

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import GamesIndex from './GamesIndex';
-import GamesCreate from './GamesCreate';
+import GameCreate from './GameCreate';
+import GameEdit from './GameEdit';
 
 export default class Dashboard extends Component {
     render() {
@@ -15,7 +16,8 @@ export default class Dashboard extends Component {
                     <h4>Lista gier</h4>
                     <Switch>
                         <Route exact path='/dashboard' component={ GamesIndex } />
-                        <Route path='/dashboard/create' component={ GamesCreate } />
+                        <Route path='/dashboard/create' component={ GameCreate } />
+                        <Route path='/dashboard/:id/edit/' component={ GameEdit } />
                     </Switch>
                 </div>
                 

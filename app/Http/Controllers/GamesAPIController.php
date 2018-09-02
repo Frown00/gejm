@@ -43,6 +43,6 @@ class GamesAPIController extends Controller
         $game['reviews'] = $reviews;
         $game['image_box'] = base64_encode($game['image_box']);
 
-        return $game;
+        return response($game, 200)->header('Content-Type', 'application/json');
     }
 }

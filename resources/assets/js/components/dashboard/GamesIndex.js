@@ -40,7 +40,7 @@ class GamesIndex extends Component {
         } else {
             return(
                 <div>
-                    {console.log(games)}
+                    {/* {console.log(games)} */}
                     
                         
                     <ul className='list-group list-group-flush'>
@@ -48,7 +48,7 @@ class GamesIndex extends Component {
                         {games.map(game => (
                             <Link
                                 className='list-group-item list-group-item-action d-flex justify-content-between align-items-center'
-                                to={`dashboard/${game.slug}`}
+                                to={`dashboard/${game.slug}/edit`}
                                 key={game.id} >
                                 
                                 <div>

@@ -15742,7 +15742,7 @@ var generatePath = function generatePath() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(39);
-module.exports = __webpack_require__(108);
+module.exports = __webpack_require__(109);
 
 
 /***/ }),
@@ -15766,7 +15766,7 @@ __webpack_require__(40);
 
 __webpack_require__(63);
 __webpack_require__(76);
-__webpack_require__(104);
+__webpack_require__(105);
 
 /***/ }),
 /* 40 */
@@ -57409,7 +57409,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GamesIndex__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GamesCreate__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GameCreate__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__GameEdit__ = __webpack_require__(104);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -57417,6 +57418,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -57461,7 +57463,8 @@ var Dashboard = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["d" /* Switch */],
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/dashboard', component: __WEBPACK_IMPORTED_MODULE_3__GamesIndex__["a" /* default */] }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/dashboard/create', component: __WEBPACK_IMPORTED_MODULE_4__GamesCreate__["a" /* default */] })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/dashboard/create', component: __WEBPACK_IMPORTED_MODULE_4__GameCreate__["a" /* default */] }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/dashboard/:id/edit/', component: __WEBPACK_IMPORTED_MODULE_5__GameEdit__["a" /* default */] })
                     )
                 )
             );
@@ -60013,7 +60016,6 @@ var GamesIndex = function (_Component) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     null,
-                    console.log(games),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'ul',
                         { className: 'list-group list-group-flush' },
@@ -60022,7 +60024,7 @@ var GamesIndex = function (_Component) {
                                 __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
                                 {
                                     className: 'list-group-item list-group-item-action d-flex justify-content-between align-items-center',
-                                    to: 'dashboard/' + game.slug,
+                                    to: 'dashboard/' + game.slug + '/edit',
                                     key: game.id },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'div',
@@ -60074,13 +60076,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var GamesCreate = function (_Component) {
-    _inherits(GamesCreate, _Component);
+var GameCreate = function (_Component) {
+    _inherits(GameCreate, _Component);
 
-    function GamesCreate(props) {
-        _classCallCheck(this, GamesCreate);
+    function GameCreate(props) {
+        _classCallCheck(this, GameCreate);
 
-        var _this = _possibleConstructorReturn(this, (GamesCreate.__proto__ || Object.getPrototypeOf(GamesCreate)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (GameCreate.__proto__ || Object.getPrototypeOf(GameCreate)).call(this, props));
 
         _this.state = {
             title: '',
@@ -60100,7 +60102,11 @@ var GamesCreate = function (_Component) {
             gameplay: '',
             walkthrough: '',
             slug: '',
-            image_box: ''
+            image_box: '',
+
+            isGenresLoaded: false,
+            errorGenre: null,
+            genres: []
         };
 
         _this.handleChange = _this.handleChange.bind(_this);
@@ -60108,7 +60114,27 @@ var GamesCreate = function (_Component) {
         return _this;
     }
 
-    _createClass(GamesCreate, [{
+    _createClass(GameCreate, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            fetch('http://gejm.pl/genres').then(function (response) {
+                return response.json();
+            }).then(function (result) {
+                // console.log(result);
+                _this2.setState({
+                    isGenresLoaded: true,
+                    genres: result,
+                    main_genre: result[0].name });
+            }, function (errorGenre) {
+                _this2.setState({
+                    isLoaded: true,
+                    errorGenre: errorGenre
+                });
+            });
+        }
+    }, {
         key: 'handleChange',
         value: function handleChange(event) {
             var property = event.target.id;
@@ -60117,6 +60143,8 @@ var GamesCreate = function (_Component) {
     }, {
         key: 'handleSubmit',
         value: function handleSubmit(event) {
+            var _this3 = this;
+
             var formData = new FormData();
             formData.append('title', this.state.title);
             formData.append('developer', this.state.developer);
@@ -60135,32 +60163,10 @@ var GamesCreate = function (_Component) {
             formData.append('gameplay', this.state.gameplay);
             formData.append('walkthrough', this.state.walkthrough);
             formData.append('slug', this.state.slug);
-
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = formData.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var pair = _step.value;
-
-                    console.log(pair[0] + ', ' + pair[1]);
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
+            formData.append('genres', this.state.genres);
+            // for (var pair of formData.entries()) {
+            //     console.log(pair[0]+ ', ' + pair[1]); 
+            // }
             fetch("http://gejm.pl/games", {
                 method: "POST",
                 headers: {
@@ -60170,7 +60176,10 @@ var GamesCreate = function (_Component) {
                 body: formData,
                 credentials: "same-origin"
             }).then(function (response) {
-                console.log(response);
+                // console.log(response);
+                if (response.status < 300) {
+                    _this3.props.history.push("/dashboard");
+                }
             });
 
             event.preventDefault();
@@ -60178,9 +60187,12 @@ var GamesCreate = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var _this4 = this;
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'form',
-                { className: 'container', onSubmit: this.handleSubmit },
+                { className: 'container', method: 'post', action: 'http://gejm.pl/games' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: csrf_token }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'form-group' },
@@ -60219,7 +60231,44 @@ var GamesCreate = function (_Component) {
                         { htmlFor: 'main_genre' },
                         'G\u0142\xF3wny gatunek: '
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'main_genre', name: 'main_genre', className: 'form-control', type: 'text', value: this.state.main_genre, onChange: this.handleChange })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'select',
+                        { id: 'main_genre', name: 'main_genre', className: 'form-control', type: 'text', value: this.state.main_genre, onChange: this.handleChange },
+                        this.state.genres.map(function (genre, key) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'option',
+                                { key: key },
+                                ' ',
+                                genre.name
+                            );
+                        })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'genres' },
+                        'Pozosta\u0142e gatunki: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        this.state.genres.map(function (genre, key) {
+                            // Return genre when is diffrent than main
+                            return genre.name !== _this4.state.main_genre ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { key: key },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', className: 'custom-form-control' }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'label',
+                                    { className: 'custom-cotrol-label', htmlFor: 'genres' },
+                                    genre.name
+                                )
+                            ) : '';
+                        })
+                    )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
@@ -60360,13 +60409,398 @@ var GamesCreate = function (_Component) {
         }
     }]);
 
-    return GamesCreate;
+    return GameCreate;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (GamesCreate);
+/* harmony default export */ __webpack_exports__["a"] = (GameCreate);
 
 /***/ }),
 /* 104 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var GameEdit = function (_Component) {
+    _inherits(GameEdit, _Component);
+
+    function GameEdit(props) {
+        _classCallCheck(this, GameEdit);
+
+        var _this = _possibleConstructorReturn(this, (GameEdit.__proto__ || Object.getPrototypeOf(GameEdit)).call(this, props));
+
+        _this.state = {
+            title: '',
+            developer: '',
+            publisher: '',
+            main_genre: '',
+            release_year: '2018',
+            release_date: '',
+            game_time: '0',
+            popularity: '0.00',
+            difficulty: '0.00',
+            rating_avg: '0.00',
+            requirements: '0.00',
+            requirements_detail: '',
+            age_rating: '0',
+            description: '',
+            gameplay: '',
+            walkthrough: '',
+            slug: '',
+            image_box: '',
+
+            isGenresLoaded: false,
+            errorGenre: null,
+            genres: []
+        };
+
+        _this.handleChange = _this.handleChange.bind(_this);
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(GameEdit, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            var gameId = this.props.match.params.id;
+            fetch('http://gejm.pl/games/edit/' + gameId).then(function (response) {
+                return response.json();
+            }).then(function (game) {
+                _this2.setState({
+                    title: game.title,
+                    developer: game.developer,
+                    publisher: game.publisher,
+                    main_genre: game.main_genre,
+                    release_year: game.release_year,
+                    release_date: game.release_date,
+                    game_time: game.game_time,
+                    popularity: game.popularity,
+                    difficulty: game.difficulty,
+                    rating_avg: game.rating_avg,
+                    requirements: game.requirements,
+                    requirements_detail: game.requirements !== null ? game.requirements : '',
+                    age_rating: game.age_rating,
+                    description: game.description !== null ? game.description : '',
+                    gameplay: game.gameplay,
+                    walkthrough: game.walkthrough,
+                    slug: game.slug,
+                    image_box: game.image_box !== null ? game.image_box : ''
+                });
+            });
+
+            fetch('http://gejm.pl/genres').then(function (response) {
+                return response.json();
+            }).then(function (result) {
+                // console.log(result);
+                _this2.setState({
+                    isGenresLoaded: true,
+                    genres: result,
+                    main_genre: result[0].name });
+            }, function (errorGenre) {
+                _this2.setState({
+                    isLoaded: true,
+                    errorGenre: errorGenre
+                });
+            });
+        }
+    }, {
+        key: 'handleChange',
+        value: function handleChange(event) {
+            var property = event.target.id;
+            this.setState(_defineProperty({}, property, event.target.value));
+        }
+    }, {
+        key: 'handleSubmit',
+        value: function handleSubmit(event) {
+            var _this3 = this;
+
+            var formData = new FormData();
+            formData.append('title', this.state.title);
+            formData.append('developer', this.state.developer);
+            formData.append('publisher', this.state.publisher);
+            formData.append('main_genre', this.state.main_genre);
+            formData.append('release_year', this.state.release_year);
+            formData.append('release_date', this.state.release_date);
+            formData.append('game_time', this.state.game_time);
+            formData.append('popularity', this.state.popularity);
+            formData.append('difficulty', this.state.difficulty);
+            formData.append('requirements', this.state.requirements);
+            formData.append('requirements_detail', this.state.requirements_detail);
+            formData.append('rating_avg', this.state.rating_avg);
+            formData.append('age_rating', this.state.age_rating);
+            formData.append('description', this.state.description);
+            formData.append('gameplay', this.state.gameplay);
+            formData.append('walkthrough', this.state.walkthrough);
+            formData.append('slug', this.state.slug);
+
+            // for (var pair of formData.entries()) {
+            //     console.log(pair[0]+ ', ' + pair[1]); 
+            // }
+
+            var gameId = this.props.match.params.id;
+
+            fetch('http://gejm.pl/games/' + gameId, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrf_token
+                },
+                body: formData,
+                credentials: "same-origin"
+            }).then(function (response) {
+                // console.log(response);
+                if (response.status < 300) {
+                    _this3.props.history.push("/dashboard");
+                }
+            });
+            event.preventDefault();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this4 = this;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'form',
+                { className: 'container', onSubmit: this.handleSubmit },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_method', value: 'PUT' }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'title' },
+                        'Tytu\u0142: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'title', name: 'title', className: 'form-control', type: 'text', value: this.state.title, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'developer' },
+                        'Developer: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'developer', name: 'developer', className: 'form-control', type: 'text', value: this.state.developer, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'publisher' },
+                        'Wydawca: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'publisher', name: 'publisher', className: 'form-control', type: 'text', value: this.state.publisher, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'main_genre' },
+                        'G\u0142\xF3wny gatunek: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'select',
+                        { id: 'main_genre', name: 'main_genre', className: 'form-control', type: 'text', value: this.state.main_genre, onChange: this.handleChange },
+                        this.state.genres.map(function (genre, key) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'option',
+                                { key: key },
+                                ' ',
+                                genre.name
+                            );
+                        })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'genres' },
+                        'Pozosta\u0142e gatunki: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        this.state.genres.map(function (genre, key) {
+                            // Return genre when is diffrent than main
+                            return genre.name !== _this4.state.main_genre ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { key: key },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', className: 'custom-form-control' }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'label',
+                                    { className: 'custom-cotrol-label', htmlFor: 'genres' },
+                                    genre.name
+                                )
+                            ) : '';
+                        })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'release_date' },
+                        'Data wydania: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'release_date', name: 'release_date', className: 'form-control', type: 'date', value: this.state.release_date, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'release_year' },
+                        'Rok wydania: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'release_year', name: 'release_year', className: 'form-control', type: 'number', min: '1990', step: '1', value: this.state.release_year, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'game_time' },
+                        'Czas gry: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'game_time', name: 'game_time', className: 'form-control', type: 'number', min: '0', value: this.state.game_time, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'popularity' },
+                        'Popularno\u015B\u0107: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'popularity', name: 'popularity', className: 'form-control', type: 'number', min: '0.00', max: '5.00', step: '0.01', value: this.state.popularity, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'difficulty' },
+                        'Trudno\u015B\u0107: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'difficulty', name: 'difficulty', className: 'form-control', type: 'number', min: '0.00', max: '5.00', step: '0.01', value: this.state.difficulty, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'rating_avg' },
+                        'Ocena \u015Brednia: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'rating_avg', name: 'rating_avg', className: 'form-control', type: 'number', min: '0.00', max: '10.00', step: '0.01', value: this.state.rating_avg, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'requirements' },
+                        'Wymagania: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'requirements', name: 'requirements', className: 'form-control', type: 'number', min: '0.00', max: '5.00', step: '0.01', value: this.state.requirements, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'requirements_detail' },
+                        'Wymagania szczeg\xF3\u0142owo: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'requirements_detail', name: 'requirements_detail', className: 'form-control', type: 'text', value: this.state.requirements_detail, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'age_rating' },
+                        'Od ilu lat: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'age_rating', name: 'age_rating', className: 'form-control', type: 'number', value: this.state.age_rating, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'description' },
+                        'Kr\xF3tki opis gry: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'description', name: 'description', className: 'form-control', type: 'text', value: this.state.description, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'gameplay' },
+                        'Link do gameplayu: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'gameplay', name: 'gameplay', className: 'form-control', type: 'text', value: this.state.gameplay, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'walkthrough' },
+                        'Link do walkthrough: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'walkthrough', name: 'walkthrough', className: 'form-control', type: 'text', value: this.state.walkthrough, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'slug' },
+                        'Unikalny adres gry: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'slug', name: 'slug', className: 'form-control', type: 'text', value: this.state.slug, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'btn btn-outline-primary', type: 'submit', value: 'Zaaktualizuj' })
+                )
+            );
+        }
+    }]);
+
+    return GameEdit;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (GameEdit);
+
+/***/ }),
+/* 105 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60376,9 +60810,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Header__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GamesList__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SingleGame__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Header__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GamesList__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SingleGame__ = __webpack_require__(108);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60432,7 +60866,7 @@ if (document.getElementById('root')) {
 }
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60461,7 +60895,7 @@ var Header = function Header() {
 /* harmony default export */ __webpack_exports__["a"] = (Header);
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60596,7 +61030,7 @@ var GamesList = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (GamesList);
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60660,7 +61094,7 @@ var SingleGame = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (SingleGame);
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

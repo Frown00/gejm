@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class GamesCreate extends Component {
+class GameCreate extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,11 +22,35 @@ class GamesCreate extends Component {
             gameplay: '',
             walkthrough: '',
             slug: '',
-            image_box: ''
+            image_box: '',
+
+            isGenresLoaded: false,
+            errorGenre: null,
+            genres: []
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('http://gejm.pl/genres')
+            .then(response => response.json())
+            .then(
+                (result) => {
+                    // console.log(result);
+                this.setState({ 
+                    isGenresLoaded: true,
+                    genres: result,
+                    main_genre: result[0].name });
+            }, 
+            (errorGenre) => {
+                this.setState({
+                    isLoaded: true,
+                    errorGenre
+                });
+            }
+        );
     }
 
     handleChange(event) {
@@ -55,10 +79,10 @@ class GamesCreate extends Component {
         formData.append('gameplay', this.state.gameplay);
         formData.append('walkthrough', this.state.walkthrough);
         formData.append('slug', this.state.slug);
-        
-        for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
-        }
+        formData.append('genres', this.state.genres);
+        // for (var pair of formData.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]); 
+        // }
         fetch("http://gejm.pl/games", {
             method: "POST",
             headers: {
@@ -69,7 +93,10 @@ class GamesCreate extends Component {
             credentials: "same-origin"
         })
         .then((response) => {
-            console.log(response);
+            // console.log(response);
+            if(response.status < 300) {
+                this.props.history.push("/dashboard");
+            }
         });
         
         event.preventDefault();
@@ -77,7 +104,8 @@ class GamesCreate extends Component {
 
     render() {
         return (
-            <form className="container" onSubmit={this.handleSubmit}>
+            <form className="container" method="post" action="http://gejm.pl/games">
+                <input type="hidden" name="_token" value={csrf_token} />
                 <div className="form-group">
                     <label htmlFor="title">Tytuł: </label>
                     <input id="title" name="title" className="form-control" type="text" value={this.state.title} onChange={this.handleChange} />
@@ -91,8 +119,26 @@ class GamesCreate extends Component {
                     <input id="publisher" name="publisher" className="form-control" type="text" value={this.state.publisher} onChange={this.handleChange} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="main_genre">Główny gatunek: </label>
-                    <input id="main_genre" name="main_genre" className="form-control" type="text" value={this.state.main_genre} onChange={this.handleChange} />
+                <label htmlFor="main_genre">Główny gatunek: </label>
+                    <select id="main_genre" name="main_genre" className="form-control" type="text" value={this.state.main_genre} onChange={this.handleChange}>
+                    {this.state.genres.map((genre, key) => (
+                            <option key={key}> {genre.name}</option>
+                         ))}
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="genres">Pozostałe gatunki: </label>
+                    <div>
+                    {this.state.genres.map((genre, key) => {        // Return genre when is diffrent than main
+                        return genre.name !== this.state.main_genre ?
+                            <div key={key}>
+                                <input type="checkbox" className="custom-form-control" ></input>
+                                <label className="custom-cotrol-label" htmlFor="genres" >{genre.name}</label>
+                            </div>
+                        :
+                        ''
+                    })}
+                    </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="release_date">Data wydania: </label>
@@ -155,4 +201,4 @@ class GamesCreate extends Component {
     }
 }
 
-export default GamesCreate;
+export default GameCreate;
