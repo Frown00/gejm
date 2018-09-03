@@ -8,7 +8,7 @@ class GameCreate extends Component {
             title: '',
             developer: '',
             publisher: '',
-            main_genre: '',
+            main_genre: 'FPS',
             release_year: '2018',
             release_date: '',
             game_time: '0',
@@ -23,17 +23,21 @@ class GameCreate extends Component {
             walkthrough: '',
             slug: '',
             image_box: '',
+            genres: [],
 
             isGenresLoaded: false,
             errorGenre: null,
-            genres: []
+            genresList: ['FPS'],
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.checkedGenres = this.checkedGenres.bind(this);
+
     }
 
     componentDidMount() {
+
         fetch('http://gejm.pl/genres')
             .then(response => response.json())
             .then(
@@ -41,7 +45,7 @@ class GameCreate extends Component {
                     // console.log(result);
                 this.setState({ 
                     isGenresLoaded: true,
-                    genres: result,
+                    genresList: result,
                     main_genre: result[0].name });
             }, 
             (errorGenre) => {
@@ -55,9 +59,53 @@ class GameCreate extends Component {
 
     handleChange(event) {
         let property = event.target.id;
+        
         this.setState({
             [property]: event.target.value,   // partialState[property] = value - { property: value} its same
         });
+        
+        if(property === 'title') {
+            this.setState({
+            'slug': strToSlug(event.target.value)
+            });
+        }
+        else if(property === 'main_genre') {
+            let genres = this.state.genres;
+            let removeIndex = genres.map(function(item) { return item.name; }).indexOf(event.target.name);
+            genres.splice(removeIndex, 1);
+            
+            this.setState({
+                'genres': genres
+            });
+            console.log(genres);
+        }
+    }
+
+    checkedGenres(event) {
+        let genreName = event.target.name;
+        let isChecked = event.target.checked;
+        let genresList = this.state.genresList;
+        let genreObject = genresList.filter((value) => {
+            return value.name == genreName;
+        })[0];
+
+        let genres = this.state.genres;
+        console.log(genreObject);
+
+        if(isChecked) {
+            genres.push(genreObject);
+            this.setState({
+                'genres': genres
+            });
+        } else {
+            let removeIndex = genres.map(function(item) { return item.id; }).indexOf(genreObject.id);
+            genres.splice(removeIndex, 1);
+            
+            this.setState({
+                'genres': genres
+            });
+        }
+        console.log(this.state.genres);
     }
 
     handleSubmit(event) {
@@ -79,7 +127,9 @@ class GameCreate extends Component {
         formData.append('gameplay', this.state.gameplay);
         formData.append('walkthrough', this.state.walkthrough);
         formData.append('slug', this.state.slug);
-        formData.append('genres', this.state.genres);
+        for(let i = 0; i < this.state.genres.length; i++) {
+            formData.append('genres[]', this.state.genres[i]);
+        }
         // for (var pair of formData.entries()) {
         //     console.log(pair[0]+ ', ' + pair[1]); 
         // }
@@ -95,6 +145,19 @@ class GameCreate extends Component {
         .then((response) => {
             // console.log(response);
             if(response.status < 300) {
+
+                fetch(`http://gejm.pl/games/${this.state.slug}/genres`, {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrf_token
+                    },
+                    body: JSON.stringify(this.state.genres)
+                })
+                .then((response) => {
+                    console.log(response);
+                });
+                
                 this.props.history.push("/dashboard");
             }
         });
@@ -104,6 +167,7 @@ class GameCreate extends Component {
 
     render() {
         return (
+            
             <form className="container" method="post" action="http://gejm.pl/games">
                 <input type="hidden" name="_token" value={csrf_token} />
                 <div className="form-group">
@@ -119,26 +183,27 @@ class GameCreate extends Component {
                     <input id="publisher" name="publisher" className="form-control" type="text" value={this.state.publisher} onChange={this.handleChange} />
                 </div>
                 <div className="form-group">
-                <label htmlFor="main_genre">Główny gatunek: </label>
+                    <label htmlFor="main_genre">Główny gatunek: </label>
                     <select id="main_genre" name="main_genre" className="form-control" type="text" value={this.state.main_genre} onChange={this.handleChange}>
-                    {this.state.genres.map((genre, key) => (
-                            <option key={key}> {genre.name}</option>
-                         ))}
-                    </select>
+                        {this.state.genresList.map((genre, key) => (
+                                <option key={key}> {genre.name}</option>
+                            ))}
+                    </select>  
                 </div>
+                <input name="genres" type="hidden" value={JSON.stringify(this.state.genres)} />
                 <div className="form-group">
-                    <label htmlFor="genres">Pozostałe gatunki: </label>
-                    <div>
-                    {this.state.genres.map((genre, key) => {        // Return genre when is diffrent than main
+                    <label>Pozostałe gatunki: </label>
+                    <ul>
+                    {this.state.genresList.map((genre, key) => {        // Return genre when is diffrent than main
                         return genre.name !== this.state.main_genre ?
-                            <div key={key}>
-                                <input type="checkbox" className="custom-form-control" ></input>
-                                <label className="custom-cotrol-label" htmlFor="genres" >{genre.name}</label>
-                            </div>
-                        :
+                            <li key={key}>
+                                <input name={genre.name} type="checkbox" className="custom-form-control" onChange={this.checkedGenres}></input>
+                                <label className="custom-cotrol-label" htmlFor="check" >{genre.name}</label>
+                            </li>
+                        : 
                         ''
                     })}
-                    </div>
+                    </ul>
                 </div>
                 <div className="form-group">
                     <label htmlFor="release_date">Data wydania: </label>
@@ -170,7 +235,7 @@ class GameCreate extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="requirements_detail">Wymagania szczegółowo: </label>
-                    <input id="requirements_detail" name="requirements_detail" className="form-control" type="text" value={this.state.requirements_detail} onChange={this.handleChange} />
+                    <textarea id="requirements_detail" name="requirements_detail" className="form-control" type="text" value={this.state.requirements_detail} onChange={this.handleChange}></textarea>
                 </div>
                 <div className="form-group">
                     <label htmlFor="age_rating">Od ilu lat: </label>
@@ -178,7 +243,7 @@ class GameCreate extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="description">Krótki opis gry: </label>
-                    <input id="description" name="description" className="form-control" type="text" value={this.state.description} onChange={this.handleChange} />
+                    <textarea id="description" name="description" className="form-control" type="text" value={this.state.description} onChange={this.handleChange}></textarea>
                 </div>
                 <div className="form-group">
                     <label htmlFor="gameplay">Link do gameplayu: </label>

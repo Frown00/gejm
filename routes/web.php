@@ -54,14 +54,15 @@ Route::middleware('auth')->group(function() {
         'as'=> 'games.edit'
     ]);
 
+    Route::get('/games/delete/{slug}', [
+        'uses'=> 'GamesController@destroy',
+        'as'=> 'games.destroy'
+    ]);
+
     Route::post('/games/{slug}', [
         'uses'=> 'GamesController@update',
         'as'=> 'games.update'
-    ]);
-
-    
-
-    
+    ]); 
 
     Route::get('/genres', [
         'uses'=> 'GenresController@index',
