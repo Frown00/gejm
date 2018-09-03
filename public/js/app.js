@@ -60104,16 +60104,20 @@ var GameCreate = function (_Component) {
             slug: '',
             image_box: '',
             genres: [],
+            platforms: [],
 
             isGenresLoaded: false,
-            errorGenre: null,
-            genresList: ['FPS']
+            errorGenres: null,
+            genresList: [],
+
+            isPlatformsLoaded: false,
+            errorPlatforms: null,
+            platformsList: []
         };
 
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
-        _this.checkedGenres = _this.checkedGenres.bind(_this);
-
+        _this.handleCheckingList = _this.handleCheckingList.bind(_this);
         return _this;
     }
 
@@ -60130,12 +60134,60 @@ var GameCreate = function (_Component) {
                     isGenresLoaded: true,
                     genresList: result,
                     main_genre: result[0].name });
-            }, function (errorGenre) {
+            }, function (errorGenres) {
                 _this2.setState({
-                    isLoaded: true,
-                    errorGenre: errorGenre
+                    isGenresLoaded: true,
+                    errorGenres: errorGenres
                 });
             });
+
+            fetch('http://gejm.pl/platforms').then(function (response) {
+                return response.json();
+            }).then(function (result) {
+                _this2.setState({
+                    isPlatformsLoaded: true,
+                    platformsList: result });
+            }, function (errorPlatforms) {
+                _this2.setState({
+                    isPlatformsLoaded: true,
+                    errorPlatforms: errorPlatforms
+                });
+            });
+        }
+
+        // objectList       - contains all objects from state (genres,platfoms) 
+        // stateListName    - name of state
+        // stateList        - value of state
+
+    }, {
+        key: 'handleCheckingList',
+        value: function handleCheckingList(event, objectList, stateListName) {
+            var isChecked = event.target.checked;
+            var checkboxName = event.target.name;
+            var object = objectList.filter(function (value) {
+                return value.name == checkboxName;
+            })[0];
+
+            var stateList = this.state[stateListName];
+
+            if (isChecked) {
+                stateList.push(object);
+                stateListName = stateListName;
+                this.setState({
+                    listName: stateList
+                });
+            } else {
+                var removeIndex = stateList.map(function (item) {
+                    return item.id;
+                }).indexOf(object.id);
+                stateList.splice(removeIndex, 1);
+                stateListName = stateListName;
+                this.setState({
+                    listName: stateList
+                });
+            }
+
+            console.log(stateList);
         }
     }, {
         key: 'handleChange',
@@ -60160,36 +60212,6 @@ var GameCreate = function (_Component) {
                 });
                 console.log(genres);
             }
-        }
-    }, {
-        key: 'checkedGenres',
-        value: function checkedGenres(event) {
-            var genreName = event.target.name;
-            var isChecked = event.target.checked;
-            var genresList = this.state.genresList;
-            var genreObject = genresList.filter(function (value) {
-                return value.name == genreName;
-            })[0];
-
-            var genres = this.state.genres;
-            console.log(genreObject);
-
-            if (isChecked) {
-                genres.push(genreObject);
-                this.setState({
-                    'genres': genres
-                });
-            } else {
-                var removeIndex = genres.map(function (item) {
-                    return item.id;
-                }).indexOf(genreObject.id);
-                genres.splice(removeIndex, 1);
-
-                this.setState({
-                    'genres': genres
-                });
-            }
-            console.log(this.state.genres);
         }
     }, {
         key: 'handleSubmit',
@@ -60326,13 +60348,44 @@ var GameCreate = function (_Component) {
                             return genre.name !== _this4.state.main_genre ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'li',
                                 { key: key },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: genre.name, type: 'checkbox', className: 'custom-form-control', onChange: _this4.checkedGenres }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: genre.name, type: 'checkbox', className: 'custom-form-control', onChange: function onChange(e) {
+                                        return _this4.handleCheckingList(e, _this4.state.genresList, 'genres');
+                                    } }),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'label',
-                                    { className: 'custom-cotrol-label', htmlFor: 'check' },
+                                    { className: 'custom-cotrol-label', htmlFor: genre.name },
                                     genre.name
                                 )
                             ) : '';
+                        })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'plaforms', type: 'hidden', value: JSON.stringify(this.state.platforms) }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        null,
+                        'Na jakie platformy: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'ul',
+                        null,
+                        this.state.platformsList.map(function (platform, key) {
+                            // Return genre when is diffrent than main
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'li',
+                                { key: key },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: platform.name, type: 'checkbox', className: 'custom-form-control', onChange: function onChange(e) {
+                                        return _this4.handleCheckingList(e, _this4.state.platformsList, 'platforms');
+                                    } }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'label',
+                                    { className: 'custom-cotrol-label', htmlFor: platform.name },
+                                    platform.name
+                                )
+                            );
                         })
                     )
                 ),
@@ -61253,7 +61306,7 @@ var GameDelete = function (_Component) {
                 "div",
                 { className: "container", style: divStyle },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "a",
+                    "button",
                     { className: "btn btn-danger", style: deleteBtnStyle, onClick: this.handleDelete },
                     "Usu\u0144"
                 )

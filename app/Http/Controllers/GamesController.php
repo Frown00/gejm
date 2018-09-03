@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests\GamesRequest;
 use App\Game;
 use App\Genre;
+use App\Platform;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Debugbar;
 
 class GamesController extends Controller
 {
-    
+    // Display all games
     public function index() {
         $games = Game::all();
         foreach($games as $game) {
@@ -33,6 +34,8 @@ class GamesController extends Controller
         return response($games, 200)->header('Content-Type', 'application/json');
     }
 
+
+    // Display one game
     public function show($id)
     {   
         $game = Game::where('id', $id)->first();
@@ -51,10 +54,11 @@ class GamesController extends Controller
         return response($game, 200)->header('Content-Type', 'application/json');;
     }
 
+
+    //  Adding game
     public function store(GamesRequest $request) {
         
         $genres = json_decode($request->input('genres'));
-
         $genresIdList = array();
         $counter = 0;
         foreach($genres as $genre) {
@@ -62,6 +66,8 @@ class GamesController extends Controller
             $counter++;
         }
 
+        $platforms = json_decode($request->input('platforms'));
+        
 
         // If no link to gameplay or walkthough set empty string, cause laravel set null by default
         foreach($request->input() as $key => $value) {

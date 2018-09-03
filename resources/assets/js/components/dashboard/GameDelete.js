@@ -41,7 +41,7 @@ export default class GameDelete extends Component {
         }
         return (
             <div className='container' style={divStyle}>
-                <a className='btn btn-danger' style={deleteBtnStyle} onClick={this.handleDelete}>Usuń</a>
+                <button className='btn btn-danger' style={deleteBtnStyle} onClick={this.handleDelete}>Usuń</button>
             </div>    
         );
     }

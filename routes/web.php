@@ -74,6 +74,16 @@ Route::middleware('auth')->group(function() {
         'as'=> 'platforms.index'
     ]);
 
+    Route::get('/raters', [
+        'uses'=> 'PlatformsController@index',
+        'as'=> 'platforms.index'
+    ]);
+
+    Route::get('/reviewers', [
+        'uses'=> 'PlatformsController@index',
+        'as'=> 'platforms.index'
+    ]);
+
     
 });
 

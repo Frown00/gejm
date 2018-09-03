@@ -24,38 +24,88 @@ class GameCreate extends Component {
             slug: '',
             image_box: '',
             genres: [],
+            platforms: [],
 
             isGenresLoaded: false,
-            errorGenre: null,
-            genresList: ['FPS'],
+            errorGenres: null,
+            genresList: [],
+
+            isPlatformsLoaded: false,
+            errorPlatforms: null,
+            platformsList: [],
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.checkedGenres = this.checkedGenres.bind(this);
-
+        this.handleCheckingList = this.handleCheckingList.bind(this);
     }
 
     componentDidMount() {
 
         fetch('http://gejm.pl/genres')
             .then(response => response.json())
-            .then(
-                (result) => {
+            .then((result) => {
                     // console.log(result);
                 this.setState({ 
                     isGenresLoaded: true,
                     genresList: result,
                     main_genre: result[0].name });
             }, 
-            (errorGenre) => {
+            (errorGenres) => {
                 this.setState({
-                    isLoaded: true,
-                    errorGenre
+                    isGenresLoaded: true,
+                    errorGenres
+                });
+            }
+        );
+
+        fetch('http://gejm.pl/platforms')
+            .then(response => response.json())
+            .then((result) => {
+                this.setState({ 
+                    isPlatformsLoaded: true,
+                    platformsList: result });
+            }, 
+            (errorPlatforms) => {
+                this.setState({
+                    isPlatformsLoaded: true,
+                    errorPlatforms
                 });
             }
         );
     }
+
+    // objectList       - contains all objects from state (genres,platfoms) 
+    // stateListName    - name of state
+    // stateList        - value of state
+    handleCheckingList(event, objectList, stateListName) {
+        let isChecked = event.target.checked;
+        let checkboxName = event.target.name;
+        let object = objectList.filter((value) => {
+            return value.name == checkboxName;
+        })[0];
+
+        let stateList = this.state[stateListName];
+
+        if(isChecked) {
+            stateList.push(object);
+            stateListName = stateListName;
+            this.setState({
+                listName: stateList
+            });
+        } else {
+            let removeIndex = stateList.map(function(item) { return item.id; }).indexOf(object.id);
+            stateList.splice(removeIndex, 1);
+            stateListName = stateListName;            
+            this.setState({
+                listName: stateList
+            });
+        }
+
+        console.log(stateList);
+
+    }
+
 
     handleChange(event) {
         let property = event.target.id;
@@ -81,32 +131,8 @@ class GameCreate extends Component {
         }
     }
 
-    checkedGenres(event) {
-        let genreName = event.target.name;
-        let isChecked = event.target.checked;
-        let genresList = this.state.genresList;
-        let genreObject = genresList.filter((value) => {
-            return value.name == genreName;
-        })[0];
-
-        let genres = this.state.genres;
-        console.log(genreObject);
-
-        if(isChecked) {
-            genres.push(genreObject);
-            this.setState({
-                'genres': genres
-            });
-        } else {
-            let removeIndex = genres.map(function(item) { return item.id; }).indexOf(genreObject.id);
-            genres.splice(removeIndex, 1);
-            
-            this.setState({
-                'genres': genres
-            });
-        }
-        console.log(this.state.genres);
-    }
+    
+    
 
     handleSubmit(event) {
         const formData = new FormData();
@@ -197,11 +223,25 @@ class GameCreate extends Component {
                     {this.state.genresList.map((genre, key) => {        // Return genre when is diffrent than main
                         return genre.name !== this.state.main_genre ?
                             <li key={key}>
-                                <input name={genre.name} type="checkbox" className="custom-form-control" onChange={this.checkedGenres}></input>
-                                <label className="custom-cotrol-label" htmlFor="check" >{genre.name}</label>
+                                <input name={genre.name} type="checkbox" className="custom-form-control" onChange={(e) => this.handleCheckingList(e, this.state.genresList, 'genres')}></input>
+                                <label className="custom-cotrol-label" htmlFor={genre.name} >{genre.name}</label>
                             </li>
                         : 
                         ''
+                    })}
+                    </ul>
+                </div>
+                <input name="plaforms" type="hidden" value={JSON.stringify(this.state.platforms)} />
+                <div className="form-group">
+                    <label>Na jakie platformy: </label>
+                    <ul>
+                    {this.state.platformsList.map((platform, key) => {        // Return genre when is diffrent than main
+                        return (
+                            <li key={key}>
+                                <input name={platform.name} type="checkbox" className="custom-form-control" onChange={(e) => this.handleCheckingList(e, this.state.platformsList, 'platforms')}></input>
+                                <label className="custom-cotrol-label" htmlFor={platform.name}>{platform.name}</label>
+                            </li>
+                        )    
                     })}
                     </ul>
                 </div>
