@@ -41,7 +41,7 @@ class GamesIndex extends Component {
             return(
                 <div>
                     {/* {console.log(games)} */}
-                    
+                    <h4>Lista gier</h4>
                         
                     <ul className='list-group list-group-flush'>
     

@@ -13,7 +13,6 @@ export default class Dashboard extends Component {
                     <a href="/dashboard" className="btn btn-dark">Dashboard</a>
                     <a href="/dashboard/create" className="btn btn-primary">Dodaj gre</a>
                     
-                    <h4>Lista gier</h4>
                     <Switch>
                         <Route exact path='/dashboard' component={ GamesIndex } />
                         <Route path='/dashboard/create' component={ GameCreate } />

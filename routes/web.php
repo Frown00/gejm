@@ -75,13 +75,13 @@ Route::middleware('auth')->group(function() {
     ]);
 
     Route::get('/raters', [
-        'uses'=> 'PlatformsController@index',
-        'as'=> 'platforms.index'
+        'uses'=> 'RatersController@index',
+        'as'=> 'raters.index'
     ]);
 
     Route::get('/reviewers', [
-        'uses'=> 'PlatformsController@index',
-        'as'=> 'platforms.index'
+        'uses'=> 'ReviewersController@index',
+        'as'=> 'Reviewers.index'
     ]);
 
     

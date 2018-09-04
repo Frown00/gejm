@@ -15742,7 +15742,7 @@ var generatePath = function generatePath() {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(39);
-module.exports = __webpack_require__(109);
+module.exports = __webpack_require__(110);
 
 
 /***/ }),
@@ -15766,7 +15766,7 @@ __webpack_require__(40);
 
 __webpack_require__(63);
 __webpack_require__(76);
-__webpack_require__(105);
+__webpack_require__(106);
 
 /***/ }),
 /* 40 */
@@ -57455,11 +57455,6 @@ var Dashboard = function (_Component) {
                         'Dodaj gre'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'h4',
-                        null,
-                        'Lista gier'
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["d" /* Switch */],
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/dashboard', component: __WEBPACK_IMPORTED_MODULE_3__GamesIndex__["a" /* default */] }),
@@ -60017,6 +60012,11 @@ var GamesIndex = function (_Component) {
                     'div',
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'h4',
+                        null,
+                        'Lista gier'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'ul',
                         { className: 'list-group list-group-flush' },
                         games.map(function (game) {
@@ -60105,6 +60105,8 @@ var GameCreate = function (_Component) {
             image_box: '',
             genres: [],
             platforms: [],
+            ratings: [],
+            reviews: [],
 
             isGenresLoaded: false,
             errorGenres: null,
@@ -60112,12 +60114,23 @@ var GameCreate = function (_Component) {
 
             isPlatformsLoaded: false,
             errorPlatforms: null,
-            platformsList: []
+            platformsList: [],
+
+            isRatersLoaded: false,
+            errorRaters: null,
+            ratersList: [],
+
+            isReviewersLoaded: false,
+            errorReviewers: null,
+            reviewersList: []
         };
 
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         _this.handleCheckingList = _this.handleCheckingList.bind(_this);
+        _this.handleRating = _this.handleRating.bind(_this);
+        _this.handleReviews = _this.handleReviews.bind(_this);
+
         return _this;
     }
 
@@ -60153,11 +60166,38 @@ var GameCreate = function (_Component) {
                     errorPlatforms: errorPlatforms
                 });
             });
+
+            fetch('http://gejm.pl/raters').then(function (response) {
+                return response.json();
+            }).then(function (result) {
+                console.log(result);
+                _this2.setState({
+                    isRatersLoaded: true,
+                    ratersList: result });
+            }, function (errorRaters) {
+                _this2.setState({
+                    isRatersLoaded: true,
+                    errorRaters: errorRaters
+                });
+            });
+
+            fetch('http://gejm.pl/reviewers').then(function (response) {
+                return response.json();
+            }).then(function (result) {
+                console.log(result);
+                _this2.setState({
+                    isReviewersLoaded: true,
+                    reviewersList: result });
+            }, function (errorReviewers) {
+                _this2.setState({
+                    isPlatformsLoaded: true,
+                    errorReviewers: errorReviewers
+                });
+            });
         }
 
         // objectList       - contains all objects from state (genres,platfoms) 
         // stateListName    - name of state
-        // stateList        - value of state
 
     }, {
         key: 'handleCheckingList',
@@ -60188,6 +60228,83 @@ var GameCreate = function (_Component) {
             }
 
             console.log(stateList);
+        }
+    }, {
+        key: 'handleRating',
+        value: function handleRating(event) {
+            var rating = event.target.value;
+            var raterName = event.target.name;
+            var rater = this.state.ratersList.filter(function (value) {
+                return value.name == raterName;
+            })[0];
+
+            var ratings = this.state.ratings;
+            var isRatedBefore = ratings.includes(rater); // -1 - new one     0 - rated before
+            console.log(isRatedBefore);
+            rater.rating = rating;
+
+            if (rating !== '' && !isRatedBefore) {
+                ratings.push(rater);
+                this.setState({
+                    'ratings': ratings
+                });
+            } else if (rating === '' && isRatedBefore) {
+                var removeRater = ratings.map(function (item) {
+                    return item.id;
+                }).indexOf(rater.id);
+                ratings.splice(removeRater, 1);
+                this.setState({
+                    'ratings': ratings
+                });
+            } else if (rating !== '' && isRatedBefore) {
+                var _removeRater = ratings.map(function (item) {
+                    return item.id;
+                }).indexOf(rater.id);
+                ratings.splice(_removeRater, 1);
+                ratings.push(rater);
+                this.setState({
+                    'ratings': ratings
+                });
+            }
+        }
+    }, {
+        key: 'handleReviews',
+        value: function handleReviews(event) {
+            var review = event.target.value;
+            var reviewerName = event.target.name;
+            var reviewer = this.state.reviewersList.filter(function (value) {
+                return value.name == reviewerName;
+            })[0];
+
+            var reviews = this.state.reviews;
+            var isReviewBefore = reviews.includes(reviewer); // -1 - new one     0 - rated before
+            reviewer.link = review;
+
+            if (review !== '' && !isReviewBefore) {
+                reviews.push(reviewer);
+                this.setState({
+                    'reviews': reviews
+                });
+            } else if (review === '' && isReviewBefore) {
+                var removeReview = reviews.map(function (item) {
+                    return item.id;
+                }).indexOf(review.id);
+                reviews.splice(removeReview, 1);
+                this.setState({
+                    'reviews': reviews
+                });
+            } else if (review !== '' && isReviewBefore) {
+                var _removeReview = reviews.map(function (item) {
+                    return item.id;
+                }).indexOf(review.id);
+                reviews.splice(_removeReview, 1);
+                reviews.push(reviewer);
+                this.setState({
+                    'reviews': reviews
+                });
+            }
+
+            console.log(this.state.reviews);
         }
     }, {
         key: 'handleChange',
@@ -60277,252 +60394,315 @@ var GameCreate = function (_Component) {
             var _this4 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'form',
-                { className: 'container', method: 'post', action: 'http://gejm.pl/games' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: csrf_token }),
+                'div',
+                null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'title' },
-                        'Tytu\u0142: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'title', name: 'title', className: 'form-control', type: 'text', value: this.state.title, onChange: this.handleChange })
+                    'h4',
+                    null,
+                    'Utw\xF3rz now\u0105 gr\u0119'
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
+                    'form',
+                    { className: 'container', method: 'post', action: 'http://gejm.pl/games' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: csrf_token }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'developer' },
-                        'Developer: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'developer', name: 'developer', className: 'form-control', type: 'text', value: this.state.developer, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'publisher' },
-                        'Wydawca: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'publisher', name: 'publisher', className: 'form-control', type: 'text', value: this.state.publisher, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'main_genre' },
-                        'G\u0142\xF3wny gatunek: '
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'title' },
+                            'Tytu\u0142: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'title', name: 'title', className: 'form-control', type: 'text', value: this.state.title, onChange: this.handleChange })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'select',
-                        { id: 'main_genre', name: 'main_genre', className: 'form-control', type: 'text', value: this.state.main_genre, onChange: this.handleChange },
-                        this.state.genresList.map(function (genre, key) {
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'option',
-                                { key: key },
-                                ' ',
-                                genre.name
-                            );
-                        })
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'genres', type: 'hidden', value: JSON.stringify(this.state.genres) }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        null,
-                        'Pozosta\u0142e gatunki: '
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'developer' },
+                            'Developer: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'developer', name: 'developer', className: 'form-control', type: 'text', value: this.state.developer, onChange: this.handleChange })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'ul',
-                        null,
-                        this.state.genresList.map(function (genre, key) {
-                            // Return genre when is diffrent than main
-                            return genre.name !== _this4.state.main_genre ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'li',
-                                { key: key },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: genre.name, type: 'checkbox', className: 'custom-form-control', onChange: function onChange(e) {
-                                        return _this4.handleCheckingList(e, _this4.state.genresList, 'genres');
-                                    } }),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'label',
-                                    { className: 'custom-cotrol-label', htmlFor: genre.name },
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'publisher' },
+                            'Wydawca: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'publisher', name: 'publisher', className: 'form-control', type: 'text', value: this.state.publisher, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'main_genre' },
+                            'G\u0142\xF3wny gatunek: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'select',
+                            { id: 'main_genre', name: 'main_genre', className: 'form-control', type: 'text', value: this.state.main_genre, onChange: this.handleChange },
+                            this.state.genresList.map(function (genre, key) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'option',
+                                    { key: key },
+                                    ' ',
                                     genre.name
-                                )
-                            ) : '';
-                        })
+                                );
+                            })
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'genres', type: 'hidden', value: JSON.stringify(this.state.genres) }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            null,
+                            'Pozosta\u0142e gatunki: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'ul',
+                            null,
+                            this.state.genresList.map(function (genre, key) {
+                                // Return genre when is diffrent than main
+                                return genre.name !== _this4.state.main_genre ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'li',
+                                    { key: key },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: genre.name, type: 'checkbox', className: 'custom-form-control', onChange: function onChange(e) {
+                                            return _this4.handleCheckingList(e, _this4.state.genresList, 'genres');
+                                        } }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'label',
+                                        { className: 'custom-cotrol-label', htmlFor: genre.name },
+                                        genre.name
+                                    )
+                                ) : '';
+                            })
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'plaforms', type: 'hidden', value: JSON.stringify(this.state.platforms) }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            null,
+                            'Na jakie platformy: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'ul',
+                            null,
+                            this.state.platformsList.map(function (platform, key) {
+                                // Return genre when is diffrent than main
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'li',
+                                    { key: key },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: platform.name, type: 'checkbox', className: 'custom-form-control', onChange: function onChange(e) {
+                                            return _this4.handleCheckingList(e, _this4.state.platformsList, 'platforms');
+                                        } }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'label',
+                                        { className: 'custom-cotrol-label', htmlFor: platform.name },
+                                        platform.name
+                                    )
+                                );
+                            })
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'release_date' },
+                            'Data wydania: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'release_date', name: 'release_date', className: 'form-control', type: 'date', value: this.state.release_date, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'release_year' },
+                            'Rok wydania: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'release_year', name: 'release_year', className: 'form-control', type: 'number', min: '1990', step: '1', value: this.state.release_year, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'game_time' },
+                            'Czas gry: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'game_time', name: 'game_time', className: 'form-control', type: 'number', min: '0', value: this.state.game_time, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'popularity' },
+                            'Popularno\u015B\u0107: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'popularity', name: 'popularity', className: 'form-control', type: 'number', min: '0.00', max: '5.00', step: '0.01', value: this.state.popularity, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'difficulty' },
+                            'Trudno\u015B\u0107: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'difficulty', name: 'difficulty', className: 'form-control', type: 'number', min: '0.00', max: '5.00', step: '0.01', value: this.state.difficulty, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'requirements' },
+                            'Wymagania: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'requirements', name: 'requirements', className: 'form-control', type: 'number', min: '0.00', max: '5.00', step: '0.01', value: this.state.requirements, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'requirements_detail' },
+                            'Wymagania szczeg\xF3\u0142owo: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { id: 'requirements_detail', name: 'requirements_detail', className: 'form-control', type: 'text', value: this.state.requirements_detail, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'reviews', type: 'hidden', value: JSON.stringify(this.state.reviews) }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            null,
+                            'Recenzje: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            null,
+                            this.state.reviewersList.map(function (reviewer, key) {
+                                // Return genre when is diffrent than main
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { key: key },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'label',
+                                        { htmlFor: reviewer.name },
+                                        reviewer.name
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: reviewer.name, type: 'text', className: 'form-control', onBlur: _this4.handleReviews, placeholder: 'Brak recenzji' })
+                                );
+                            })
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'ratings', type: 'hidden', value: JSON.stringify(this.state.ratings) }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            null,
+                            'Oceny: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            null,
+                            this.state.ratersList.map(function (rater, key) {
+                                // Return genre when is diffrent than main
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { key: key, style: { display: 'flex', marginBottom: '10px' } },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'label',
+                                        { style: { display: 'inline-block', width: '100px', marginBottom: '0', alignSelf: 'center' }, htmlFor: rater.name },
+                                        rater.name
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: rater.name, type: 'number', min: '0.00', max: '10.00', step: '0.1', style: { width: '90px' }, className: 'form-control', onBlur: _this4.handleRating, placeholder: 'Brak' })
+                                );
+                            })
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'rating_avg' },
+                            'Ocena \u015Brednia: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'rating_avg', name: 'rating_avg', className: 'form-control', type: 'number', min: '0.00', max: '10.00', step: '0.01', value: this.state.rating_avg, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'age_rating' },
+                            'Od ilu lat: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'age_rating', name: 'age_rating', className: 'form-control', type: 'number', value: this.state.age_rating, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'description' },
+                            'Kr\xF3tki opis gry: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { id: 'description', name: 'description', className: 'form-control', type: 'text', value: this.state.description, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'gameplay' },
+                            'Link do gameplayu: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'gameplay', name: 'gameplay', className: 'form-control', type: 'text', value: this.state.gameplay, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'walkthrough' },
+                            'Link do walkthrough: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'walkthrough', name: 'walkthrough', className: 'form-control', type: 'text', value: this.state.walkthrough, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'slug' },
+                            'Unikalny adres gry: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'slug', name: 'slug', className: 'form-control', type: 'text', value: this.state.slug, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'btn btn-outline-primary', type: 'submit', value: 'Dodaj' })
                     )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'plaforms', type: 'hidden', value: JSON.stringify(this.state.platforms) }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        null,
-                        'Na jakie platformy: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'ul',
-                        null,
-                        this.state.platformsList.map(function (platform, key) {
-                            // Return genre when is diffrent than main
-                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'li',
-                                { key: key },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: platform.name, type: 'checkbox', className: 'custom-form-control', onChange: function onChange(e) {
-                                        return _this4.handleCheckingList(e, _this4.state.platformsList, 'platforms');
-                                    } }),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'label',
-                                    { className: 'custom-cotrol-label', htmlFor: platform.name },
-                                    platform.name
-                                )
-                            );
-                        })
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'release_date' },
-                        'Data wydania: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'release_date', name: 'release_date', className: 'form-control', type: 'date', value: this.state.release_date, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'release_year' },
-                        'Rok wydania: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'release_year', name: 'release_year', className: 'form-control', type: 'number', min: '1990', step: '1', value: this.state.release_year, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'game_time' },
-                        'Czas gry: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'game_time', name: 'game_time', className: 'form-control', type: 'number', min: '0', value: this.state.game_time, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'popularity' },
-                        'Popularno\u015B\u0107: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'popularity', name: 'popularity', className: 'form-control', type: 'number', min: '0.00', max: '5.00', step: '0.01', value: this.state.popularity, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'difficulty' },
-                        'Trudno\u015B\u0107: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'difficulty', name: 'difficulty', className: 'form-control', type: 'number', min: '0.00', max: '5.00', step: '0.01', value: this.state.difficulty, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'rating_avg' },
-                        'Ocena \u015Brednia: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'rating_avg', name: 'rating_avg', className: 'form-control', type: 'number', min: '0.00', max: '10.00', step: '0.01', value: this.state.rating_avg, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'requirements' },
-                        'Wymagania: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'requirements', name: 'requirements', className: 'form-control', type: 'number', min: '0.00', max: '5.00', step: '0.01', value: this.state.requirements, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'requirements_detail' },
-                        'Wymagania szczeg\xF3\u0142owo: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { id: 'requirements_detail', name: 'requirements_detail', className: 'form-control', type: 'text', value: this.state.requirements_detail, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'age_rating' },
-                        'Od ilu lat: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'age_rating', name: 'age_rating', className: 'form-control', type: 'number', value: this.state.age_rating, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'description' },
-                        'Kr\xF3tki opis gry: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { id: 'description', name: 'description', className: 'form-control', type: 'text', value: this.state.description, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'gameplay' },
-                        'Link do gameplayu: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'gameplay', name: 'gameplay', className: 'form-control', type: 'text', value: this.state.gameplay, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'walkthrough' },
-                        'Link do walkthrough: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'walkthrough', name: 'walkthrough', className: 'form-control', type: 'text', value: this.state.walkthrough, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'slug' },
-                        'Unikalny adres gry: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'slug', name: 'slug', className: 'form-control', type: 'text', value: this.state.slug, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'btn btn-outline-primary', type: 'submit', value: 'Dodaj' })
                 )
             );
         }
@@ -60540,7 +60720,7 @@ var GameCreate = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__GameDelete__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__GameDelete__ = __webpack_require__(105);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -60940,15 +61120,95 @@ var GameEdit = function (_Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var GameDelete = function (_Component) {
+    _inherits(GameDelete, _Component);
+
+    function GameDelete(props) {
+        _classCallCheck(this, GameDelete);
+
+        var _this = _possibleConstructorReturn(this, (GameDelete.__proto__ || Object.getPrototypeOf(GameDelete)).call(this, props));
+
+        _this.state = {
+            isDeleted: false,
+            error: null
+        };
+
+        _this.handleDelete = _this.handleDelete.bind(_this);
+        return _this;
+    }
+
+    _createClass(GameDelete, [{
+        key: "handleDelete",
+        value: function handleDelete() {
+            var _this2 = this;
+
+            console.log(this.props.slug);
+            var isDelete = confirm("Czy na pewno chcesz usun\u0105\u0107 gr\u0119 " + this.props.title + "?");
+
+            if (isDelete) {
+                fetch("http://gejm.pl/games/delete/" + this.props.slug).then(function (response) {
+                    if (response.status < 300) {
+                        _this2.props.history.push("/dashboard");
+                    } else {
+                        console.log("Nie udało się usunąć gry");
+                    }
+                });
+            }
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var divStyle = {
+                display: 'flex',
+                justifyContent: 'flex-end'
+            };
+            var deleteBtnStyle = {
+                color: 'white'
+
+            };
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "container", style: divStyle },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "button",
+                    { className: "btn btn-danger", style: deleteBtnStyle, onClick: this.handleDelete },
+                    "Usu\u0144"
+                )
+            );
+        }
+    }]);
+
+    return GameDelete;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (GameDelete);
+
+/***/ }),
+/* 106 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Header__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GamesList__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SingleGame__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Header__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GamesList__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SingleGame__ = __webpack_require__(109);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -61002,7 +61262,7 @@ if (document.getElementById('root')) {
 }
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61031,7 +61291,7 @@ var Header = function Header() {
 /* harmony default export */ __webpack_exports__["a"] = (Header);
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61166,7 +61426,7 @@ var GamesList = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (GamesList);
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61230,94 +61490,10 @@ var SingleGame = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (SingleGame);
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var GameDelete = function (_Component) {
-    _inherits(GameDelete, _Component);
-
-    function GameDelete(props) {
-        _classCallCheck(this, GameDelete);
-
-        var _this = _possibleConstructorReturn(this, (GameDelete.__proto__ || Object.getPrototypeOf(GameDelete)).call(this, props));
-
-        _this.state = {
-            isDeleted: false,
-            error: null
-        };
-
-        _this.handleDelete = _this.handleDelete.bind(_this);
-        return _this;
-    }
-
-    _createClass(GameDelete, [{
-        key: "handleDelete",
-        value: function handleDelete() {
-            var _this2 = this;
-
-            console.log(this.props.slug);
-            var isDelete = confirm("Czy na pewno chcesz usun\u0105\u0107 gr\u0119 " + this.props.title + "?");
-
-            if (isDelete) {
-                fetch("http://gejm.pl/games/delete/" + this.props.slug).then(function (response) {
-                    if (response.status < 300) {
-                        _this2.props.history.push("/dashboard");
-                    } else {
-                        console.log("Nie udało się usunąć gry");
-                    }
-                });
-            }
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var divStyle = {
-                display: 'flex',
-                justifyContent: 'flex-end'
-            };
-            var deleteBtnStyle = {
-                color: 'white'
-
-            };
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "container", style: divStyle },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "button",
-                    { className: "btn btn-danger", style: deleteBtnStyle, onClick: this.handleDelete },
-                    "Usu\u0144"
-                )
-            );
-        }
-    }]);
-
-    return GameDelete;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (GameDelete);
 
 /***/ })
 /******/ ]);
