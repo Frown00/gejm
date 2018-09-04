@@ -7,6 +7,8 @@ use App\Http\Requests\GamesRequest;
 use App\Game;
 use App\Genre;
 use App\Platform;
+use App\Reviewer;
+use App\Rater;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Debugbar;
 
@@ -57,7 +59,8 @@ class GamesController extends Controller
 
     //  Adding game
     public function store(GamesRequest $request) {
-        dd($request->all());
+
+        // Getting ids from game genres
         $genres = json_decode($request->input('genres'));
         $genresIdList = array();
         $counter = 0;
@@ -66,19 +69,46 @@ class GamesController extends Controller
             $counter++;
         }
 
-        $platforms = json_decode($request->input('platforms'));
-        
+        // Getting ids from game platforms
+        $platforms = json_decode($request->input('plaforms'));
+        $platformsIdList = array();
+        $counter = 0;
+        foreach($platforms as $platform) {
+            $platformsIdList[$counter] = Platform::where('id', $platform->id)->first()->id;
+            $counter++;
+        }
 
+      
         // If no link to gameplay or walkthough set empty string, cause laravel set null by default
         foreach($request->input() as $key => $value) {
             if(empty($value) && ($key == 'gameplay' || $key == 'walkthrough')){
                 $request->request->set($key, '');
             }    
         }
-        // dd($request->all());
+        
+        
+        ///// CREATE NEW GAME ////
         $game = Game::create($request->all());
         
+        ///// RELATIONSHIPS /////
         $game->genres()->sync($genresIdList);
+        $game->platforms()->sync($platformsIdList);
+
+        // Add ratings to game
+         
+        $raters = json_decode($request->input('ratings'));       
+        foreach($raters as $rater) {
+            $raterId = Rater::where('id', $rater->id)->first()->id;
+            $rating = $rater->rating;
+            $game->ratings()->syncWithoutDetaching([$raterId => ['rating' => $rating]]);
+        }
+        // Add review links to game
+        $reviewers = json_decode($request->input('reviews'));        
+        foreach($reviewers as $reviewer) {
+            $reviewerId = Reviewer::where('id', $reviewer->id)->first()->id;
+            $review = $reviewer->link;
+            $game->reviews()->syncWithoutDetaching([$reviewerId => ['link' => $review]]);
+        }
         
         return response('Gra została dodana', 201);
     }
