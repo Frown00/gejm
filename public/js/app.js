@@ -60098,6 +60098,7 @@ var GameCreate = function (_Component) {
             requirements: '0.00',
             requirements_detail: '',
             age_rating: '0',
+
             description: '',
             gameplay: '',
             walkthrough: '',
@@ -60203,8 +60204,22 @@ var GameCreate = function (_Component) {
         key: 'handleFile',
         value: function handleFile(event) {
             // let reader = new FileReader();
+            var file = event.target.files[0];
 
-            console.log(this.state.image_box);
+            var reader = new FileReader();
+            var image = document.getElementById("game-image");
+            reader.onload = function (event) {
+                image.src = event.target.result;
+                image.width = 200;
+                image.height = 300;
+                image.style = "display: block";
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+
+            console.log(reader);
         }
     }, {
         key: 'handleCheckingList',
@@ -60247,7 +60262,6 @@ var GameCreate = function (_Component) {
 
             var ratings = this.state.ratings;
             var isRatedBefore = ratings.includes(rater); // -1 - new one     0 - rated before
-            console.log(isRatedBefore);
             rater.rating = rating;
 
             if (rating !== '' && !isRatedBefore) {
@@ -60273,6 +60287,18 @@ var GameCreate = function (_Component) {
                     'ratings': ratings
                 });
             }
+            var onlyRatings = ratings.map(function (item) {
+                return Number(item.rating);
+            });
+
+            var avgRating = onlyRatings.reduce(function (total, rating) {
+                return total + rating;
+            }) / onlyRatings.length;
+            avgRating = avgRating.toFixed(2);
+
+            this.setState({
+                'rating_avg': avgRating
+            });
         }
     }, {
         key: 'handleReviews',
@@ -60335,6 +60361,14 @@ var GameCreate = function (_Component) {
                     'genres': genres
                 });
                 console.log(genres);
+            } else if (property === 'release_date') {
+                if (event.target.value !== NaN) {
+                    var date = new Date(event.target.value);
+                    var year = date.getYear() + 1900;
+                    this.setState({
+                        'release_year': year
+                    });
+                }
             }
         }
     }, {
@@ -60531,16 +60565,7 @@ var GameCreate = function (_Component) {
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'release_date', name: 'release_date', className: 'form-control', type: 'date', value: this.state.release_date, onChange: this.handleChange })
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'release_year' },
-                            'Rok wydania: '
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'release_year', name: 'release_year', className: 'form-control', type: 'number', min: '1990', step: '1', value: this.state.release_year, onChange: this.handleChange })
-                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'release_year', name: 'release_year', className: 'form-control', type: 'hidden', min: '1990', step: '1', value: this.state.release_year, onChange: this.handleChange }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'form-group' },
@@ -60651,9 +60676,14 @@ var GameCreate = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'label',
                             { htmlFor: 'rating_avg' },
-                            'Ocena \u015Brednia: '
+                            '\u015Arednia: '
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'rating_avg', name: 'rating_avg', className: 'form-control', type: 'number', min: '0.00', max: '10.00', step: '0.01', value: this.state.rating_avg, onChange: this.handleChange })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { style: { marginLeft: '0.5em', fontSize: '1.2em', color: 'red' } },
+                            this.state.rating_avg
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'rating_avg', name: 'rating_avg', className: 'form-control', type: 'hidden', value: this.state.rating_avg })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
@@ -60675,6 +60705,7 @@ var GameCreate = function (_Component) {
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'image_box', name: 'image_box', className: 'form-control', type: 'file', onChange: this.handleFile })
                     ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { style: { display: 'none' }, id: 'game-image', src: '#', alt: 'Image of game' }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'form-group' },
@@ -60817,8 +60848,14 @@ var GameEdit = function (_Component) {
                     gameplay: game.gameplay,
                     walkthrough: game.walkthrough,
                     slug: game.slug,
-                    image_box: game.image_box !== null ? game.image_box : ''
+                    image_box: game.image_box !== null ? game.image_box[0] : ''
                 });
+
+                // Add image src if exist
+                if (_this2.state.image_box) {
+                    var image = document.getElementById('game-image');
+                    image.src = "/storage/upload/game-images/" + _this2.state.image_box.path;
+                }
             });
 
             fetch('http://gejm.pl/genres').then(function (response) {
@@ -60847,6 +60884,27 @@ var GameEdit = function (_Component) {
                     'slug': strToSlug(event.target.value)
                 });
             }
+        }
+    }, {
+        key: 'handleFile',
+        value: function handleFile(event) {
+            // let reader = new FileReader();
+            var file = event.target.files[0];
+
+            var reader = new FileReader();
+            var image = document.getElementById("game-image");
+            reader.onload = function (event) {
+                image.src = event.target.result;
+                image.width = 200;
+                image.height = 300;
+                image.style = "display: block";
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+
+            console.log(reader);
         }
     }, {
         key: 'handleSubmit',
@@ -61076,6 +61134,21 @@ var GameEdit = function (_Component) {
                             'Od ilu lat: '
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'age_rating', name: 'age_rating', className: 'form-control', type: 'number', value: this.state.age_rating, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'image-box' },
+                            'Zdj\u0119cie: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'image_box', name: 'image_box', className: 'form-control', type: 'file', onChange: this.handleFile })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { id: 'game-image', src: '#', width: '200', height: '300' })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',

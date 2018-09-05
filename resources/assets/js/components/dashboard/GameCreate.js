@@ -18,6 +18,7 @@ class GameCreate extends Component {
             requirements: '0.00',
             requirements_detail: '',
             age_rating: '0',
+            
             description: '',
             gameplay: '',
             walkthrough: '',
@@ -124,8 +125,22 @@ class GameCreate extends Component {
     // stateListName    - name of state
     handleFile(event) {
         // let reader = new FileReader();
+        let file = event.target.files[0];
+
+        let reader = new FileReader();
+        let image = document.getElementById("game-image");
+        reader.onload = function(event) {
+            image.src = event.target.result;
+            image.width = 200;
+            image.height = 300;
+            image.style = "display: block";
+        };
         
-        console.log(this.state.image_box);
+        if(file) {
+            reader.readAsDataURL(file);
+        }
+        
+        console.log(reader);
     }
 
     handleCheckingList(event, objectList, stateListName) {
@@ -165,7 +180,6 @@ class GameCreate extends Component {
 
         let ratings = this.state.ratings;
         let isRatedBefore = ratings.includes(rater); // -1 - new one     0 - rated before
-        console.log(isRatedBefore);
         rater.rating = rating;
 
         if(rating !== '' && !isRatedBefore) {
@@ -187,6 +201,16 @@ class GameCreate extends Component {
                 'ratings':  ratings
             });
         }
+        let onlyRatings = ratings.map((item) => {
+            return Number(item.rating);
+        });
+
+        let avgRating = onlyRatings.reduce((total, rating) => total + rating) / onlyRatings.length;
+        avgRating = avgRating.toFixed(2);
+        
+        this.setState({
+            'rating_avg': avgRating
+        });
     }
 
     handleReviews(event) {
@@ -246,6 +270,15 @@ class GameCreate extends Component {
                 'genres': genres
             });
             console.log(genres);
+        } else if(property === 'release_date') {
+            if(event.target.value !== NaN) {
+                let date = new Date(event.target.value);
+                let year = date.getYear() + 1900;
+                this.setState({
+                    'release_year': year
+                });
+            }
+            
         }
     }
 
@@ -369,10 +402,8 @@ class GameCreate extends Component {
                         <label htmlFor="release_date">Data wydania: </label>
                         <input id="release_date" name="release_date" className="form-control" type="date" value={this.state.release_date} onChange={this.handleChange} />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="release_year">Rok wydania: </label>
-                        <input id="release_year" name="release_year" className="form-control" type="number" min="1990" step="1" value={this.state.release_year} onChange={this.handleChange} />
-                    </div>
+                    <input id="release_year" name="release_year" className="form-control" type="hidden" min="1990" step="1" value={this.state.release_year} onChange={this.handleChange} />
+
                     <div className="form-group">
                         <label htmlFor="game_time">Czas gry: </label>
                         <input id="game_time" name="game_time" className="form-control" type="number" min="0" value={this.state.game_time} onChange={this.handleChange} />
@@ -423,8 +454,8 @@ class GameCreate extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="rating_avg">Ocena średnia: </label>
-                        <input id="rating_avg" name="rating_avg" className="form-control" type="number" min="0.00" max="10.00" step="0.01" value={this.state.rating_avg} onChange={this.handleChange} />
+                        <label htmlFor="rating_avg">Średnia: </label><span style={{marginLeft: '0.5em', fontSize: '1.2em', color: 'red'}}>{this.state.rating_avg}</span>
+                        <input  id="rating_avg" name="rating_avg" className="form-control" type="hidden" value={this.state.rating_avg} />
                     </div>
                     
                     <div className="form-group">
@@ -436,7 +467,7 @@ class GameCreate extends Component {
                         <label htmlFor="image-box">Zdjęcie: </label>
                         <input id="image_box" name="image_box" className="form-control" type="file" onChange={this.handleFile}/>
                     </div>
-
+                    <img style={{display: 'none'}} id="game-image" src="#" alt="Image of game" />
                     <div className="form-group">
                         <label htmlFor="description">Krótki opis gry: </label>
                         <textarea id="description" name="description" className="form-control" type="text" value={this.state.description} onChange={this.handleChange}></textarea>

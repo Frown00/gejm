@@ -59,9 +59,17 @@ class GameEdit extends Component {
                     gameplay: game.gameplay,
                     walkthrough: game.walkthrough,
                     slug: game.slug,
-                    image_box: game.image_box !== null ? game.image_box : ''
+                    image_box: game.image_box !== null ? game.image_box[0] : ''
                 });
+                
+                // Add image src if exist
+                if(this.state.image_box) {
+                    let image = document.getElementById('game-image');
+                    image.src = "/storage/upload/game-images/" + this.state.image_box.path;
+                }
             });
+
+        
 
         fetch('http://gejm.pl/genres')
             .then(response => response.json())
@@ -81,6 +89,7 @@ class GameEdit extends Component {
             }
         );
     }
+
     handleChange(event) {
         let property = event.target.id;
         this.setState({
@@ -92,6 +101,26 @@ class GameEdit extends Component {
             'slug': strToSlug(event.target.value)
             });
         }
+    }
+
+    handleFile(event) {
+        // let reader = new FileReader();
+        let file = event.target.files[0];
+
+        let reader = new FileReader();
+        let image = document.getElementById("game-image");
+        reader.onload = function(event) {
+            image.src = event.target.result;
+            image.width = 200;
+            image.height = 300;
+            image.style = "display: block";
+        };
+        
+        if(file) {
+            reader.readAsDataURL(file);
+        }
+        
+        console.log(reader);
     }
 
     handleSubmit(event) {
@@ -217,6 +246,14 @@ class GameEdit extends Component {
                     <div className="form-group">
                         <label htmlFor="age_rating">Od ilu lat: </label>
                         <input id="age_rating" name="age_rating" className="form-control" type="number" value={this.state.age_rating} onChange={this.handleChange} />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="image-box">Zdjęcie: </label>
+                        <input id="image_box" name="image_box" className="form-control" type="file" onChange={this.handleFile}/>
+                    </div>
+                    <div>
+                        <img id="game-image" src="#" width="200" height="300"/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="description">Krótki opis gry: </label>

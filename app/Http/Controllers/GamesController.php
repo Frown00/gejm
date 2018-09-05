@@ -25,7 +25,7 @@ class GamesController extends Controller
             $platforms = $game->platforms()->select('name', 'company')->get();
             $ratings = $game->ratings()->select('name', 'rating')->get();
             $reviews = $game->reviews()->select('name', 'link')->get();
-            $imageBox = $game->imageBox()->select('path')->get();
+            $imageBox = $game->imageBox()->select('id', 'game_id', 'path')->get();
 
             $game['genres'] = $genres;
             $game['platforms'] = $platforms;
@@ -47,7 +47,7 @@ class GamesController extends Controller
         $platforms = $game->platforms()->select('name', 'company')->get();
         $ratings = $game->ratings()->select('name', 'rating')->get();
         $reviews = $game->reviews()->select('name', 'link')->get();
-        $imageBox = $game->imageBox()->select('path')->get();
+        $imageBox = $game->imageBox()->select('id','game_id', 'path')->get();
 
         $game['genres'] = $genres;
         $game['platforms'] = $platforms;
@@ -136,7 +136,7 @@ class GamesController extends Controller
         $platforms = $game->platforms()->select('name', 'company')->get();
         $ratings = $game->ratings()->select('name', 'rating')->get();
         $reviews = $game->reviews()->select('name', 'link')->get();
-        $imageBox = $game->imageBox()->select('path')->get();
+        $imageBox = $game->imageBox()->select('id','game_id', 'path')->get();
         
         $game['genres'] = $genres;
         $game['platforms'] = $platforms;
