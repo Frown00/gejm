@@ -60102,7 +60102,7 @@ var GameCreate = function (_Component) {
             gameplay: '',
             walkthrough: '',
             slug: '',
-            image_box: '',
+            image_box: {},
             genres: [],
             platforms: [],
             ratings: [],
@@ -60130,7 +60130,7 @@ var GameCreate = function (_Component) {
         _this.handleCheckingList = _this.handleCheckingList.bind(_this);
         _this.handleRating = _this.handleRating.bind(_this);
         _this.handleReviews = _this.handleReviews.bind(_this);
-
+        _this.handleFile = _this.handleFile.bind(_this);
         return _this;
     }
 
@@ -60199,6 +60199,13 @@ var GameCreate = function (_Component) {
         // objectList       - contains all objects from state (genres,platfoms) 
         // stateListName    - name of state
 
+    }, {
+        key: 'handleFile',
+        value: function handleFile(event) {
+            // let reader = new FileReader();
+
+            console.log(this.state.image_box);
+        }
     }, {
         key: 'handleCheckingList',
         value: function handleCheckingList(event, objectList, stateListName) {
@@ -60403,7 +60410,7 @@ var GameCreate = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'form',
-                    { className: 'container', method: 'post', action: 'http://gejm.pl/games' },
+                    { className: 'container', method: 'post', action: 'http://gejm.pl/games', encType: 'multipart/form-data' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: csrf_token }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
@@ -60657,6 +60664,16 @@ var GameCreate = function (_Component) {
                             'Od ilu lat: '
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'age_rating', name: 'age_rating', className: 'form-control', type: 'number', value: this.state.age_rating, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'image-box' },
+                            'Zdj\u0119cie: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'image_box', name: 'image_box', className: 'form-control', type: 'file', onChange: this.handleFile })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',

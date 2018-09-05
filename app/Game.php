@@ -25,5 +25,9 @@ class Game extends Model
     
     public function reviews() {
         return $this->belongsToMany('App\Reviewer', 'game_review', 'game_id', 'reviewer_id')->withPivot('link');
-    }  
+    } 
+    
+    public function imageBox() {
+        return $this->hasOne('App\GameImages', 'game_id');
+    }
 }

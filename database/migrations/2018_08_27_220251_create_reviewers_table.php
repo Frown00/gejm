@@ -16,10 +16,13 @@ class CreateReviewersTable extends Migration
         Schema::create('reviewers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255)->unique();
+            $table->integer('logo_id')->unsigned()->nullable();
             $table->timestamps();
+
         });
 
-        DB::statement("ALTER TABLE `reviewers` ADD `logo` MEDIUMBLOB");
+        
+        //DB::statement("ALTER TABLE `reviewers` ADD `logo` MEDIUMBLOB");
 
     }
 

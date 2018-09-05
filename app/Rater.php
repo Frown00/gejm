@@ -11,4 +11,8 @@ class Rater extends Model
     public function games() {
         return $this->belongsToMany('App\Game', 'game_rating', 'game_id', 'rater_id');
     }
+
+    public function logo() {
+        return $this->hasOne('App\LogoImages');
+    }
 }

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\GamesRequest;
+use Illuminate\Support\Facades\Storage;
 use App\Game;
 use App\Genre;
 use App\Platform;
 use App\Reviewer;
 use App\Rater;
+use App\GameImages;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Debugbar;
 
@@ -23,14 +25,13 @@ class GamesController extends Controller
             $platforms = $game->platforms()->select('name', 'company')->get();
             $ratings = $game->ratings()->select('name', 'rating')->get();
             $reviews = $game->reviews()->select('name', 'link')->get();
+            $imageBox = $game->imageBox()->select('path')->get();
 
             $game['genres'] = $genres;
             $game['platforms'] = $platforms;
             $game['ratings'] = $ratings;
             $game['reviews'] = $reviews;
-            
-
-            $game['image_box'] = base64_encode($game['image_box']);
+            $game['image_box'] = $imageBox;           
         }
 
         return response($games, 200)->header('Content-Type', 'application/json');
@@ -46,12 +47,13 @@ class GamesController extends Controller
         $platforms = $game->platforms()->select('name', 'company')->get();
         $ratings = $game->ratings()->select('name', 'rating')->get();
         $reviews = $game->reviews()->select('name', 'link')->get();
-        
+        $imageBox = $game->imageBox()->select('path')->get();
+
         $game['genres'] = $genres;
         $game['platforms'] = $platforms;
         $game['ratings'] = $ratings;
         $game['reviews'] = $reviews;
-        $game['image_box'] = base64_encode($game['image_box']);
+        $game['image_box'] = $imageBox;
 
         return response($game, 200)->header('Content-Type', 'application/json');;
     }
@@ -59,7 +61,7 @@ class GamesController extends Controller
 
     //  Adding game
     public function store(GamesRequest $request) {
-
+        
         // Getting ids from game genres
         $genres = json_decode($request->input('genres'));
         $genresIdList = array();
@@ -109,6 +111,18 @@ class GamesController extends Controller
             $review = $reviewer->link;
             $game->reviews()->syncWithoutDetaching([$reviewerId => ['link' => $review]]);
         }
+
+
+        $image = $request->file('image_box');
+        $imageName = $image->getClientOriginalName();
+
+        if($image !== null) {
+            $path = Storage::putFileAs('public/upload/game-images', $image, $imageName);
+            $imageBox = new GameImages();
+            $imageBox->path = $imageName;
+            $imageBox->game_id = $game->id;
+            $imageBox->save();
+        }
         
         return response('Gra została dodana', 201);
     }
@@ -122,12 +136,13 @@ class GamesController extends Controller
         $platforms = $game->platforms()->select('name', 'company')->get();
         $ratings = $game->ratings()->select('name', 'rating')->get();
         $reviews = $game->reviews()->select('name', 'link')->get();
+        $imageBox = $game->imageBox()->select('path')->get();
         
         $game['genres'] = $genres;
         $game['platforms'] = $platforms;
         $game['ratings'] = $ratings;
         $game['reviews'] = $reviews;
-        $game['image_box'] = base64_encode($game['image_box']);
+        $game['image_box'] = $imageBox;
 
         return response($game, 200)->header('Content-Type', 'application/json');;
     }

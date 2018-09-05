@@ -36,13 +36,15 @@ class CreateGamesTable extends Migration
             $table->string('gameplay')->default('');
             $table->string('walkthrough')->default('');
             $table->string('slug', 255);
-            
+            $table->string('author', 255)->default('');
             $table->timestamps();
 
             $table->unique(array('title', 'developer', 'release_year'));
+
         });
 
-        DB::statement("ALTER TABLE `games` ADD `image_box` MEDIUMBLOB");
+        
+        
     }
 
     /**

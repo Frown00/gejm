@@ -22,7 +22,7 @@ class GameCreate extends Component {
             gameplay: '',
             walkthrough: '',
             slug: '',
-            image_box: '',
+            image_box: {},
             genres: [],
             platforms: [],
             ratings: [],
@@ -50,7 +50,7 @@ class GameCreate extends Component {
         this.handleCheckingList = this.handleCheckingList.bind(this);
         this.handleRating = this.handleRating.bind(this);
         this.handleReviews = this.handleReviews.bind(this);
-
+        this.handleFile = this.handleFile.bind(this);
     }
 
     componentDidMount() {
@@ -122,7 +122,12 @@ class GameCreate extends Component {
 
     // objectList       - contains all objects from state (genres,platfoms) 
     // stateListName    - name of state
-    
+    handleFile(event) {
+        // let reader = new FileReader();
+        
+        console.log(this.state.image_box);
+    }
+
     handleCheckingList(event, objectList, stateListName) {
         let isChecked = event.target.checked;
         let checkboxName = event.target.name;
@@ -309,7 +314,7 @@ class GameCreate extends Component {
         return (
             <div>
                 <h4>Utwórz nową grę</h4>
-                <form className="container" method="post" action="http://gejm.pl/games">
+                <form className="container" method="post" action="http://gejm.pl/games" encType="multipart/form-data">
                     <input type="hidden" name="_token" value={csrf_token} />
                     <div className="form-group">
                         <label htmlFor="title">Tytuł: </label>
@@ -426,6 +431,12 @@ class GameCreate extends Component {
                         <label htmlFor="age_rating">Od ilu lat: </label>
                         <input id="age_rating" name="age_rating" className="form-control" type="number" value={this.state.age_rating} onChange={this.handleChange} />
                     </div>
+
+                    <div className="form-group">
+                        <label htmlFor="image-box">Zdjęcie: </label>
+                        <input id="image_box" name="image_box" className="form-control" type="file" onChange={this.handleFile}/>
+                    </div>
+
                     <div className="form-group">
                         <label htmlFor="description">Krótki opis gry: </label>
                         <textarea id="description" name="description" className="form-control" type="text" value={this.state.description} onChange={this.handleChange}></textarea>

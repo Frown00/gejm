@@ -16,10 +16,12 @@ class CreateRatersTable extends Migration
         Schema::create('raters', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255)->unique();
+            $table->integer('logo_id')->unsigned()->nullable();
             $table->timestamps();
+
         });
 
-        DB::statement("ALTER TABLE `raters` ADD `logo` MEDIUMBLOB");
+        
     }
 
     /**
