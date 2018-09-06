@@ -10,9 +10,15 @@ export default class Dashboard extends Component {
         return (
             <BrowserRouter>
                 <div className="container">
-                    <a href="/dashboard" className="btn btn-dark">Dashboard</a>
-                    <a href="/dashboard/create" className="btn btn-primary">Dodaj gre</a>
-                    
+                    <div className="container" style={{paddingLeft: '0', marginBottom: '3em'}}>
+                        <a href="/dashboard" className="btn btn-dark panel">Dashboard</a>
+                        <a href="/dashboard/create" className="btn panel add-game">Dodaj gre</a>
+                        <a href="#" className="btn panel category">Kategorie</a>
+                        <a href="#" className="btn panel raters">Oceniający</a>                    
+                        <a href="#" className="btn panel reviewers">Recenzenci</a>
+                        <a href="#" className="btn panel free-games">Darmowe gry</a>
+                    </div>
+
                     <Switch>
                         <Route exact path='/dashboard' component={ GamesIndex } />
                         <Route path='/dashboard/create' component={ GameCreate } />

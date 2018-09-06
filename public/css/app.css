@@ -10489,3 +10489,32 @@ form > div > label {
   margin-top: 1em;
 }
 
+.btn.panel {
+  margin-top: 0.5em;
+}
+
+.add-game {
+  color: white;
+  background-color: green;
+}
+
+.category {
+  color: white;
+  background-color: #1aa31a;
+}
+
+.raters {
+  color: white;
+  background-color: green;
+}
+
+.reviewers {
+  color: white;
+  background-color: #1aa31a;
+}
+
+.free-games {
+  color: white;
+  background-color: green;
+}
+

@@ -263,8 +263,9 @@ class GameCreate extends Component {
         }
         else if(property === 'main_genre') {
             let genres = this.state.genres;
-            let removeIndex = genres.map(function(item) { return item.name; }).indexOf(event.target.name);
-            genres.splice(removeIndex, 1);
+            let removeIndex = genres.map(function(item) { return item.name; }).indexOf(event.target.value);
+            if(removeIndex >= 0) 
+                genres.splice(removeIndex, 1);
             
             this.setState({
                 'genres': genres
@@ -304,6 +305,8 @@ class GameCreate extends Component {
         formData.append('gameplay', this.state.gameplay);
         formData.append('walkthrough', this.state.walkthrough);
         formData.append('slug', this.state.slug);
+        formData.append('image_box', this.image_box);
+        formData.append('genres', JSON.stringify(this.state.genres));
         for(let i = 0; i < this.state.genres.length; i++) {
             formData.append('genres[]', this.state.genres[i]);
         }
@@ -323,17 +326,17 @@ class GameCreate extends Component {
             // console.log(response);
             if(response.status < 300) {
 
-                fetch(`http://gejm.pl/games/${this.state.slug}/genres`, {
-                    method: "POST",
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': csrf_token
-                    },
-                    body: JSON.stringify(this.state.genres)
-                })
-                .then((response) => {
-                    console.log(response);
-                });
+                // fetch(`http://gejm.pl/games/${this.state.slug}/genres`, {
+                //     method: "POST",
+                //     headers: {
+                //         'Accept': 'application/json',
+                //         'X-CSRF-TOKEN': csrf_token
+                //     },
+                //     body: JSON.stringify(this.state.genres)
+                // })
+                // .then((response) => {
+                //     console.log(response);
+                // });
                 
                 this.props.history.push("/dashboard");
             }
@@ -371,20 +374,20 @@ class GameCreate extends Component {
                     </div>
                     <input name="genres" type="hidden" value={JSON.stringify(this.state.genres)} />
                     <div className="form-group">
-                        <label>Pozostałe gatunki: </label>
-                        <ul>
+                        <label htmlFor="genres">Pozostałe gatunki: </label>
+                        <div>
                         {this.state.genresList.map((genre, key) => {        // Return genre when is diffrent than main
                             return genre.name !== this.state.main_genre ?
-                                <li key={key}>
-                                    <input name={genre.name} type="checkbox" className="custom-form-control" onChange={(e) => this.handleCheckingList(e, this.state.genresList, 'genres')}></input>
-                                    <label className="custom-cotrol-label" htmlFor={genre.name} >{genre.name}</label>
-                                </li>
-                            : 
+                                <div key={key}>
+                                    <input type="checkbox" className="custom-form-control" ></input>
+                                    <label className="custom-cotrol-label" htmlFor="genres" >{genre.name}</label>
+                                </div>
+                            :
                             ''
                         })}
-                        </ul>
+                        </div>
                     </div>
-                    <input name="plaforms" type="hidden" value={JSON.stringify(this.state.platforms)} />
+                    <input name="platforms" type="hidden" value={JSON.stringify(this.state.platforms)} />
                     <div className="form-group">
                         <label>Na jakie platformy: </label>
                         <ul>
@@ -467,7 +470,9 @@ class GameCreate extends Component {
                         <label htmlFor="image-box">Zdjęcie: </label>
                         <input id="image_box" name="image_box" className="form-control" type="file" onChange={this.handleFile}/>
                     </div>
-                    <img style={{display: 'none'}} id="game-image" src="#" alt="Image of game" />
+                    <div>
+                        <img style={{display: 'none'}} id="game-image" src="#" alt="Image of game" />
+                    </div>
                     <div className="form-group">
                         <label htmlFor="description">Krótki opis gry: </label>
                         <textarea id="description" name="description" className="form-control" type="text" value={this.state.description} onChange={this.handleChange}></textarea>

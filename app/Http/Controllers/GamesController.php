@@ -71,8 +71,8 @@ class GamesController extends Controller
             $counter++;
         }
 
-        // Getting ids from game platforms
-        $platforms = json_decode($request->input('plaforms'));
+        // // Getting ids from game platforms
+        $platforms = json_decode($request->input('platforms'));
         $platformsIdList = array();
         $counter = 0;
         foreach($platforms as $platform) {
@@ -83,7 +83,7 @@ class GamesController extends Controller
       
         // If no link to gameplay or walkthough set empty string, cause laravel set null by default
         foreach($request->input() as $key => $value) {
-            if(empty($value) && ($key == 'gameplay' || $key == 'walkthrough')){
+            if(empty($value) && ($key == 'gameplay' || $key == 'walkthrough' || $key == 'author')){
                 $request->request->set($key, '');
             }    
         }
@@ -92,11 +92,11 @@ class GamesController extends Controller
         ///// CREATE NEW GAME ////
         $game = Game::create($request->all());
         
-        ///// RELATIONSHIPS /////
+        // ///// RELATIONSHIPS /////
         $game->genres()->sync($genresIdList);
         $game->platforms()->sync($platformsIdList);
 
-        // Add ratings to game
+        // // Add ratings to game
          
         $raters = json_decode($request->input('ratings'));       
         foreach($raters as $rater) {
@@ -112,19 +112,20 @@ class GamesController extends Controller
             $game->reviews()->syncWithoutDetaching([$reviewerId => ['link' => $review]]);
         }
 
+        if($request->file('image_box')) {
+            $image = $request->file('image_box');
+            $imageName = $image->getClientOriginalName();
 
-        $image = $request->file('image_box');
-        $imageName = $image->getClientOriginalName();
-
-        if($image !== null) {
-            $path = Storage::putFileAs('public/upload/game-images', $image, $imageName);
-            $imageBox = new GameImages();
-            $imageBox->path = $imageName;
-            $imageBox->game_id = $game->id;
-            $imageBox->save();
+            if($image !== null) {
+                $path = Storage::putFileAs('public/upload/game-images', $image, $imageName);
+                $imageBox = new GameImages();
+                $imageBox->path = $imageName;
+                $imageBox->game_id = $game->id;
+                $imageBox->save();
+            }
         }
         
-        return response('Gra została dodana', 201);
+        return redirect('dashboard');
     }
 
     public function edit($slug)
@@ -132,10 +133,10 @@ class GamesController extends Controller
         $game = new Game();
         $game = Game::where('slug', $slug)->first();
         
-        $genres = $game->genres()->select('name', 'description')->get();
-        $platforms = $game->platforms()->select('name', 'company')->get();
-        $ratings = $game->ratings()->select('name', 'rating')->get();
-        $reviews = $game->reviews()->select('name', 'link')->get();
+        $genres = $game->genres()->select('*')->get();
+        $platforms = $game->platforms()->select('*')->get();
+        $ratings = $game->ratings()->select('*')->get();
+        $reviews = $game->reviews()->select('*')->get();
         $imageBox = $game->imageBox()->select('id','game_id', 'path')->get();
         
         $game['genres'] = $genres;
@@ -149,15 +150,77 @@ class GamesController extends Controller
 
     public function update(GamesRequest $request, $slug) {
         // If no link to gameplay or walkthough set empty string, cause laravel set null by default
+        // Getting ids from game genres
+        $genres = json_decode($request->input('genres'));
+        $genresIdList = array();
+        $counter = 0;
+        foreach($genres as $genre) {
+            $genresIdList[$counter] = Genre::where('id', $genre->id)->first()->id;
+            $counter++;
+        }
+
+       // Getting ids from game platforms
+        $platforms = json_decode($request->input('platforms'));
+        $platformsIdList = array();
+        $counter = 0;
+        foreach($platforms as $platform) {
+            $platformsIdList[$counter] = Platform::where('id', $platform->id)->first()->id;
+            $counter++;
+        }
+
         foreach($request->input() as $key => $value) {
-            if(empty($value) && ($key == 'gameplay' || $key == 'walkthrough')){
+            if(empty($value) && ($key == 'gameplay' || $key == 'walkthrough' || $key == 'author')){
                 $request->request->set($key, '');
             }    
         }
+        $game = Game::where('slug', $slug)->first();
+        Game::where('slug', $slug)->update($request->except('_token', '_method', 'genres', 'platforms', 'reviews', 'ratings', 'image_box'));
         
-        Game::where('slug', $slug)->update($request->all());
+        $game->genres()->sync($genresIdList);
+        $game->platforms()->sync($platformsIdList);
 
-        return response('Zaktualizowano', 200);
+
+        $raters = json_decode($request->input('ratings'));
+        $ratingsArray = [];       
+        foreach($raters as $rater) {
+            $raterId = Rater::where('id', $rater->id)->first()->id;
+            $rating = $rater->rating;
+            $ratingsArray[$raterId] = ['rating' => $rating];
+        }
+        $game->ratings()->sync($ratingsArray);
+        
+        // Add review links to game
+        $reviewsArray = []; 
+        $reviewers = json_decode($request->input('reviews'));        
+        foreach($reviewers as $reviewer) {
+            $reviewerId = Reviewer::where('id', $reviewer->id)->first()->id;
+            $review = $reviewer->link;
+            $reviewsArray[$reviewerId] = ['link' => $review];
+        }
+
+        $game->reviews()->sync($reviewsArray);
+
+        $currentGameImage = GameImages::where('game_id', $game->id)->first();
+        if($currentGameImage) {
+            $path = $currentGameImage->path;
+            Storage::delete('public/upload/game-images/' . $path);
+            $currentGameImage->delete();
+        }
+
+        if($request->file('image_box')) {
+            $image = $request->file('image_box');
+            $imageName = $image->getClientOriginalName();
+            
+            if($image !== null) {
+                $path = Storage::putFileAs('public/upload/game-images', $image, $imageName);
+                $imageBox = new GameImages();
+                $imageBox->path = $imageName;
+                $imageBox->game_id = $game->id;
+                $imageBox->save();
+            }
+        }
+        
+        return redirect('dashboard');
     }
     
 

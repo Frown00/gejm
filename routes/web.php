@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function() {
         'as'=> 'games.destroy'
     ]);
 
-    Route::post('/games/{slug}', [
+    Route::put('/games/{slug}', [
         'uses'=> 'GamesController@update',
         'as'=> 'games.update'
     ]); 
