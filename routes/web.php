@@ -92,10 +92,34 @@ Route::middleware('auth')->group(function() {
         'uses'=> 'GenresController@destroy',
         'as'=> 'genres.destroy'
     ]);
+    
 
+    Route::get('/dashboard/platforms', 'DashboardController@index');
+    Route::get('/dashboard/platforms/create', 'DashboardController@index');
+    Route::get('/dashboard/platforms/{id}/edit', 'DashboardController@index');
     Route::get('/platforms', [
         'uses'=> 'PlatformsController@index',
         'as'=> 'platforms.index'
+    ]);
+
+    Route::post('/platforms', [
+        'uses'=> 'PlatformsController@store',
+        'as'=> 'platforms.store'
+    ]);
+
+    Route::get('/platforms/edit/{id}', [
+        'uses'=> 'PlatformsController@edit',
+        'as'=> 'platforms.edit'
+    ]);
+
+    Route::put('/platforms/{id}', [
+        'uses'=> 'PlatformsController@update',
+        'as'=> 'platforms.update'
+    ]);
+
+    Route::get('/platforms/delete/{id}', [
+        'uses'=> 'PlatformsController@destroy',
+        'as'=> 'platforms.destroy'
     ]);
 
     Route::get('/raters', [

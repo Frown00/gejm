@@ -57411,7 +57411,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GamesIndex__ = __webpack_require__(102);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GameCreate__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__GameEdit__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Genres__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__genre_Genres__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__platforms_Platforms__ = __webpack_require__(123);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -57419,6 +57420,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -57466,6 +57468,11 @@ var Dashboard = function (_Component) {
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'a',
+                            { href: '/dashboard/platforms', className: 'btn panel platforms' },
+                            'Platformy'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
                             { href: '#', className: 'btn panel raters' },
                             'Oceniaj\u0105cy'
                         ),
@@ -57486,7 +57493,8 @@ var Dashboard = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/dashboard', component: __WEBPACK_IMPORTED_MODULE_3__GamesIndex__["a" /* default */] }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/dashboard/create', component: __WEBPACK_IMPORTED_MODULE_4__GameCreate__["a" /* default */] }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/dashboard/:id/edit/', component: __WEBPACK_IMPORTED_MODULE_5__GameEdit__["a" /* default */] }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/dashboard/genres', component: __WEBPACK_IMPORTED_MODULE_6__Genres__["a" /* default */] })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/dashboard/genres', component: __WEBPACK_IMPORTED_MODULE_6__genre_Genres__["a" /* default */] }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/dashboard/platforms', component: __WEBPACK_IMPORTED_MODULE_7__platforms_Platforms__["a" /* default */] })
                     )
                 )
             );
@@ -62082,7 +62090,662 @@ var SingleGame = function (_Component) {
 /* 112 */,
 /* 113 */,
 /* 114 */,
-/* 115 */
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PlatformCreate__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PlatformEdit__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PlatformsIndex__ = __webpack_require__(131);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+var Platforms = function (_Component) {
+    _inherits(Platforms, _Component);
+
+    function Platforms() {
+        _classCallCheck(this, Platforms);
+
+        return _possibleConstructorReturn(this, (Platforms.__proto__ || Object.getPrototypeOf(Platforms)).apply(this, arguments));
+    }
+
+    _createClass(Platforms, [{
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["a" /* BrowserRouter */],
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'container' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'container', style: { paddingLeft: '0', marginBottom: '3em' } },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { href: '/dashboard/platforms/create', className: 'btn btn-primary' },
+                            'Dodaj platform\u0119'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["d" /* Switch */],
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { exact: true, path: '/dashboard/platforms', component: __WEBPACK_IMPORTED_MODULE_4__PlatformsIndex__["a" /* default */] }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/dashboard/platforms/create', component: __WEBPACK_IMPORTED_MODULE_2__PlatformCreate__["a" /* default */] }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/dashboard/platforms/:id/edit/', component: __WEBPACK_IMPORTED_MODULE_3__PlatformEdit__["a" /* default */] })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Platforms;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Platforms);
+
+/***/ }),
+/* 124 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var PlatformCreate = function (_Component) {
+    _inherits(PlatformCreate, _Component);
+
+    function PlatformCreate(props) {
+        _classCallCheck(this, PlatformCreate);
+
+        var _this = _possibleConstructorReturn(this, (PlatformCreate.__proto__ || Object.getPrototypeOf(PlatformCreate)).call(this, props));
+
+        _this.state = {
+            name: '',
+            company: '',
+            isLoaded: false
+        };
+
+        _this.handleChange = _this.handleChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(PlatformCreate, [{
+        key: 'handleChange',
+        value: function handleChange(event) {
+            var property = event.target.id;
+
+            this.setState(_defineProperty({}, property, event.target.value));
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'form',
+                { className: 'container', method: 'post', action: 'http://gejm.pl/genres' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: csrf_token }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'name' },
+                        'Nazwa: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'name', name: 'name', className: 'form-control', type: 'text', value: this.state.name, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'company' },
+                        'Firma: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'company', name: 'company', className: 'form-control', type: 'text', value: this.state.company, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'btn btn-outline-primary', type: 'submit', value: 'Dodaj' })
+                )
+            );
+        }
+    }]);
+
+    return PlatformCreate;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (PlatformCreate);
+
+/***/ }),
+/* 125 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PlatformDelete__ = __webpack_require__(132);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var PlatformEdit = function (_Component) {
+    _inherits(PlatformEdit, _Component);
+
+    function PlatformEdit(props) {
+        _classCallCheck(this, PlatformEdit);
+
+        var _this = _possibleConstructorReturn(this, (PlatformEdit.__proto__ || Object.getPrototypeOf(PlatformEdit)).call(this, props));
+
+        _this.state = {
+            name: '',
+            company: '',
+            isLoaded: false,
+            error: null
+        };
+
+        _this.handleChange = _this.handleChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(PlatformEdit, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            var platformId = this.props.match.params.id;
+            fetch('http://gejm.pl/platforms/edit/' + platformId).then(function (response) {
+                return response.json();
+            }).then(function (platform) {
+                console.log(platform);
+                _this2.setState({
+                    isLoaded: true,
+                    name: platform.name,
+                    company: platform.company
+                });
+            }, function (error) {
+                _this2.setState({
+                    isLoaded: true,
+                    error: error
+                });
+            });
+        }
+    }, {
+        key: 'handleChange',
+        value: function handleChange(event) {
+            var property = event.target.id;
+
+            this.setState(_defineProperty({}, property, event.target.value));
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var platformId = this.props.match.params.id;
+            var updateHref = 'http://gejm.pl/platforms/' + platformId;
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__PlatformDelete__["a" /* default */], { id: platformId, name: this.state.name, history: this.props.history }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'form',
+                    { className: 'container', method: 'post', action: updateHref },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: csrf_token }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_method', value: 'PUT' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'name' },
+                            'Nazwa: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'name', name: 'name', className: 'form-control', type: 'text', value: this.state.name, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'company' },
+                            'Firma: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'company', name: 'company', className: 'form-control', type: 'text', value: this.state.company, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'btn btn-outline-primary', type: 'submit', value: 'Zaaktualizuj' })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return PlatformEdit;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (PlatformEdit);
+
+/***/ }),
+/* 126 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__GenreCreate__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GenreEdit__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GenresIndex__ = __webpack_require__(130);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+var Genres = function (_Component) {
+    _inherits(Genres, _Component);
+
+    function Genres() {
+        _classCallCheck(this, Genres);
+
+        return _possibleConstructorReturn(this, (Genres.__proto__ || Object.getPrototypeOf(Genres)).apply(this, arguments));
+    }
+
+    _createClass(Genres, [{
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["a" /* BrowserRouter */],
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'container' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'container', style: { paddingLeft: '0', marginBottom: '3em' } },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { href: '/dashboard/genres/create', className: 'btn btn-primary' },
+                            'Dodaj kategori\u0119'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["d" /* Switch */],
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { exact: true, path: '/dashboard/genres', component: __WEBPACK_IMPORTED_MODULE_4__GenresIndex__["a" /* default */] }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/dashboard/genres/create', component: __WEBPACK_IMPORTED_MODULE_2__GenreCreate__["a" /* default */] }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/dashboard/genres/:id/edit/', component: __WEBPACK_IMPORTED_MODULE_3__GenreEdit__["a" /* default */] })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Genres;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (Genres);
+
+/***/ }),
+/* 127 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var GenreCreate = function (_Component) {
+    _inherits(GenreCreate, _Component);
+
+    function GenreCreate(props) {
+        _classCallCheck(this, GenreCreate);
+
+        var _this = _possibleConstructorReturn(this, (GenreCreate.__proto__ || Object.getPrototypeOf(GenreCreate)).call(this, props));
+
+        _this.state = {
+            name: '',
+            funky_name: '',
+            description: '',
+            isLoaded: false
+        };
+
+        _this.handleChange = _this.handleChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(GenreCreate, [{
+        key: 'handleChange',
+        value: function handleChange(event) {
+            var property = event.target.id;
+
+            this.setState(_defineProperty({}, property, event.target.value));
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'form',
+                { className: 'container', method: 'post', action: 'http://gejm.pl/genres' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: csrf_token }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'name' },
+                        'Nazwa: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'name', name: 'name', className: 'form-control', type: 'text', value: this.state.name, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'funky_name' },
+                        '"\u015Amieszna" nazwa: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'funky_name', name: 'funky_name', className: 'form-control', type: 'text', value: this.state.funky_name, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { htmlFor: 'description' },
+                        'Opis: '
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { id: 'description', name: 'description', className: 'form-control', type: 'text', value: this.state.description, onChange: this.handleChange })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'btn btn-outline-primary', type: 'submit', value: 'Dodaj' })
+                )
+            );
+        }
+    }]);
+
+    return GenreCreate;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (GenreCreate);
+
+/***/ }),
+/* 128 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__GenreDelete__ = __webpack_require__(129);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var GenreEdit = function (_Component) {
+    _inherits(GenreEdit, _Component);
+
+    function GenreEdit(props) {
+        _classCallCheck(this, GenreEdit);
+
+        var _this = _possibleConstructorReturn(this, (GenreEdit.__proto__ || Object.getPrototypeOf(GenreEdit)).call(this, props));
+
+        _this.state = {
+            name: '',
+            funky_name: '',
+            description: '',
+            isLoaded: false,
+            error: null
+        };
+
+        _this.handleChange = _this.handleChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(GenreEdit, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            var genreId = this.props.match.params.id;
+            fetch('http://gejm.pl/genres/edit/' + genreId).then(function (response) {
+                return response.json();
+            }).then(function (genre) {
+                console.log(genre);
+                _this2.setState({
+                    isLoaded: true,
+                    name: genre.name,
+                    funky_name: genre.funky_name,
+                    description: genre.description !== null ? genre.description : ''
+                });
+            }, function (error) {
+                _this2.setState({
+                    isLoaded: true,
+                    error: error
+                });
+            });
+        }
+    }, {
+        key: 'handleChange',
+        value: function handleChange(event) {
+            var property = event.target.id;
+
+            this.setState(_defineProperty({}, property, event.target.value));
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var genreId = this.props.match.params.id;
+            var updateHref = 'http://gejm.pl/genres/' + genreId;
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__GenreDelete__["a" /* default */], { id: genreId, name: this.state.name, history: this.props.history }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'form',
+                    { className: 'container', method: 'post', action: updateHref },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: csrf_token }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_method', value: 'PUT' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'name' },
+                            'Nazwa: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'name', name: 'name', className: 'form-control', type: 'text', value: this.state.name, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'funky_name' },
+                            '"\u015Amieszna" nazwa: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'funky_name', name: 'funky_name', className: 'form-control', type: 'text', value: this.state.funky_name, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'description' },
+                            'Opis: '
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { id: 'description', name: 'description', className: 'form-control', type: 'text', value: this.state.description, onChange: this.handleChange })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'btn btn-outline-primary', type: 'submit', value: 'Zaaktualizuj' })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return GenreEdit;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (GenreEdit);
+
+/***/ }),
+/* 129 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var GenreDelete = function (_Component) {
+    _inherits(GenreDelete, _Component);
+
+    function GenreDelete(props) {
+        _classCallCheck(this, GenreDelete);
+
+        var _this = _possibleConstructorReturn(this, (GenreDelete.__proto__ || Object.getPrototypeOf(GenreDelete)).call(this, props));
+
+        _this.state = {
+            isDeleted: false,
+            error: null
+        };
+
+        _this.handleDelete = _this.handleDelete.bind(_this);
+        return _this;
+    }
+
+    _createClass(GenreDelete, [{
+        key: "handleDelete",
+        value: function handleDelete() {
+            var _this2 = this;
+
+            console.log(this.props.id);
+            var isDelete = confirm("Czy na pewno chcesz usun\u0105\u0107 kategori\u0119 " + this.props.name + "?");
+
+            if (isDelete) {
+                fetch("http://gejm.pl/genres/delete/" + this.props.id).then(function (response) {
+                    if (response.status < 300) {
+                        _this2.props.history.push("/dashboard/genres");
+                    } else {
+                        console.log("Nie udało się usunąć kategorii");
+                    }
+                });
+            }
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var divStyle = {
+                display: 'flex',
+                justifyContent: 'flex-end'
+            };
+            var deleteBtnStyle = {
+                color: 'white'
+
+            };
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "container", style: divStyle },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "button",
+                    { className: "btn btn-danger", style: deleteBtnStyle, onClick: this.handleDelete },
+                    "Usu\u0144"
+                )
+            );
+        }
+    }]);
+
+    return GenreDelete;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (GenreDelete);
+
+/***/ }),
+/* 130 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62206,16 +62869,13 @@ var GenresIndex = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (GenresIndex);
 
 /***/ }),
-/* 116 */
+/* 131 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__GenresCreate__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GenresEdit__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__GenresIndex__ = __webpack_require__(115);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -62227,206 +62887,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+var PlatformsIndex = function (_Component) {
+    _inherits(PlatformsIndex, _Component);
 
+    function PlatformsIndex() {
+        _classCallCheck(this, PlatformsIndex);
 
-
-var Dashboard = function (_Component) {
-    _inherits(Dashboard, _Component);
-
-    function Dashboard() {
-        _classCallCheck(this, Dashboard);
-
-        return _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).apply(this, arguments));
-    }
-
-    _createClass(Dashboard, [{
-        key: 'render',
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["a" /* BrowserRouter */],
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'container' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'container', style: { paddingLeft: '0', marginBottom: '3em' } },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'a',
-                            { href: '/dashboard/genres/create', className: 'btn btn-primary' },
-                            'Dodaj kategori\u0119'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["d" /* Switch */],
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { exact: true, path: '/dashboard/genres', component: __WEBPACK_IMPORTED_MODULE_4__GenresIndex__["a" /* default */] }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/dashboard/genres/create', component: __WEBPACK_IMPORTED_MODULE_2__GenresCreate__["a" /* default */] }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Route */], { path: '/dashboard/genres/:id/edit/', component: __WEBPACK_IMPORTED_MODULE_3__GenresEdit__["a" /* default */] })
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Dashboard;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (Dashboard);
-
-/***/ }),
-/* 117 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var GenresCreate = function (_Component) {
-    _inherits(GenresCreate, _Component);
-
-    function GenresCreate(props) {
-        _classCallCheck(this, GenresCreate);
-
-        var _this = _possibleConstructorReturn(this, (GenresCreate.__proto__ || Object.getPrototypeOf(GenresCreate)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (PlatformsIndex.__proto__ || Object.getPrototypeOf(PlatformsIndex)).call(this));
 
         _this.state = {
-            name: '',
-            funky_name: '',
-            description: '',
-            isLoaded: false
-        };
-
-        _this.handleChange = _this.handleChange.bind(_this);
-        return _this;
-    }
-
-    _createClass(GenresCreate, [{
-        key: 'handleChange',
-        value: function handleChange(event) {
-            var property = event.target.id;
-
-            this.setState(_defineProperty({}, property, event.target.value));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'form',
-                { className: 'container', method: 'post', action: 'http://gejm.pl/genres' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: csrf_token }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'name' },
-                        'Nazwa: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'name', name: 'name', className: 'form-control', type: 'text', value: this.state.name, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'funky_name' },
-                        '"\u015Amieszna" nazwa: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'funky_name', name: 'funky_name', className: 'form-control', type: 'text', value: this.state.funky_name, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'label',
-                        { htmlFor: 'description' },
-                        'Opis: '
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { id: 'description', name: 'description', className: 'form-control', type: 'text', value: this.state.description, onChange: this.handleChange })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'btn btn-outline-primary', type: 'submit', value: 'Dodaj' })
-                )
-            );
-        }
-    }]);
-
-    return GenresCreate;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (GenresCreate);
-
-/***/ }),
-/* 118 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__GenresDelete__ = __webpack_require__(119);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-var GenresEdit = function (_Component) {
-    _inherits(GenresEdit, _Component);
-
-    function GenresEdit(props) {
-        _classCallCheck(this, GenresEdit);
-
-        var _this = _possibleConstructorReturn(this, (GenresEdit.__proto__ || Object.getPrototypeOf(GenresEdit)).call(this, props));
-
-        _this.state = {
-            name: '',
-            funky_name: '',
-            description: '',
+            error: null,
             isLoaded: false,
-            error: null
+            platforms: []
         };
-
-        _this.handleChange = _this.handleChange.bind(_this);
         return _this;
     }
 
-    _createClass(GenresEdit, [{
+    _createClass(PlatformsIndex, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
             var _this2 = this;
 
-            var genreId = this.props.match.params.id;
-            fetch('http://gejm.pl/genres/edit/' + genreId).then(function (response) {
+            fetch('http://gejm.pl/platforms').then(function (response) {
                 return response.json();
-            }).then(function (genre) {
-                console.log(genre);
+            }).then(function (result) {
                 _this2.setState({
                     isLoaded: true,
-                    name: genre.name,
-                    funky_name: genre.funky_name,
-                    description: genre.description !== null ? genre.description : ''
-                });
+                    platforms: result });
             }, function (error) {
                 _this2.setState({
                     isLoaded: true,
@@ -62435,73 +62922,78 @@ var GenresEdit = function (_Component) {
             });
         }
     }, {
-        key: 'handleChange',
-        value: function handleChange(event) {
-            var property = event.target.id;
-
-            this.setState(_defineProperty({}, property, event.target.value));
-        }
-    }, {
         key: 'render',
         value: function render() {
-            var genreId = this.props.match.params.id;
-            var updateHref = 'http://gejm.pl/genres/' + genreId;
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__GenresDelete__["a" /* default */], { id: genreId, name: this.state.name, history: this.props.history }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { className: 'container', method: 'post', action: updateHref },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_token', value: csrf_token }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'hidden', name: '_method', value: 'PUT' }),
+            var _state = this.state,
+                error = _state.error,
+                isLoaded = _state.isLoaded,
+                platforms = _state.platforms;
+
+            if (error) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    null,
+                    'Error: ',
+                    error.message
+                );
+            } else if (!isLoaded) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    null,
+                    'Loading...'
+                );
+            } else {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'name' },
-                            'Nazwa: '
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'name', name: 'name', className: 'form-control', type: 'text', value: this.state.name, onChange: this.handleChange })
+                        'h4',
+                        null,
+                        'Lista platform'
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'funky_name' },
-                            '"\u015Amieszna" nazwa: '
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'funky_name', name: 'funky_name', className: 'form-control', type: 'text', value: this.state.funky_name, onChange: this.handleChange })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'description' },
-                            'Opis: '
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { id: 'description', name: 'description', className: 'form-control', type: 'text', value: this.state.description, onChange: this.handleChange })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'btn btn-outline-primary', type: 'submit', value: 'Zaaktualizuj' })
+                        'ul',
+                        { className: 'list-group list-group-flush' },
+                        platforms.map(function (platform) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                                {
+                                    className: 'list-group-item list-group-item-action d-flex justify-content-between align-items-center',
+                                    to: 'platforms/' + platform.id + '/edit',
+                                    key: platform.id },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    null,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'h5',
+                                        null,
+                                        platform.id
+                                    )
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    null,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'h5',
+                                        null,
+                                        platform.name
+                                    )
+                                )
+                            );
+                        })
                     )
-                )
-            );
+                );
+            }
         }
     }]);
 
-    return GenresEdit;
+    return PlatformsIndex;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (GenresEdit);
+/* harmony default export */ __webpack_exports__["a"] = (PlatformsIndex);
 
 /***/ }),
-/* 119 */
+/* 132 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62517,13 +63009,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var GenresDelete = function (_Component) {
-    _inherits(GenresDelete, _Component);
+var PlatformDelete = function (_Component) {
+    _inherits(PlatformDelete, _Component);
 
-    function GenresDelete(props) {
-        _classCallCheck(this, GenresDelete);
+    function PlatformDelete(props) {
+        _classCallCheck(this, PlatformDelete);
 
-        var _this = _possibleConstructorReturn(this, (GenresDelete.__proto__ || Object.getPrototypeOf(GenresDelete)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (PlatformDelete.__proto__ || Object.getPrototypeOf(PlatformDelete)).call(this, props));
 
         _this.state = {
             isDeleted: false,
@@ -62534,20 +63026,20 @@ var GenresDelete = function (_Component) {
         return _this;
     }
 
-    _createClass(GenresDelete, [{
+    _createClass(PlatformDelete, [{
         key: "handleDelete",
         value: function handleDelete() {
             var _this2 = this;
 
             console.log(this.props.id);
-            var isDelete = confirm("Czy na pewno chcesz usun\u0105\u0107 kategori\u0119 " + this.props.name + "?");
+            var isDelete = confirm("Czy na pewno chcesz usun\u0105\u0107 platform\u0119 " + this.props.name + "?");
 
             if (isDelete) {
-                fetch("http://gejm.pl/genres/delete/" + this.props.id).then(function (response) {
+                fetch("http://gejm.pl/platforms/delete/" + this.props.id).then(function (response) {
                     if (response.status < 300) {
-                        _this2.props.history.push("/dashboard/genres");
+                        _this2.props.history.push("/dashboard/platforms");
                     } else {
-                        console.log("Nie udało się usunąć gry");
+                        console.log("Nie udało się usunąć platformy");
                     }
                 });
             }
@@ -62575,10 +63067,10 @@ var GenresDelete = function (_Component) {
         }
     }]);
 
-    return GenresDelete;
+    return PlatformDelete;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (GenresDelete);
+/* harmony default export */ __webpack_exports__["a"] = (PlatformDelete);
 
 /***/ })
 /******/ ]);

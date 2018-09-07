@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class GenresDelete extends Component {
+export default class GenreDelete extends Component {
     constructor(props) {
         super(props);
 
@@ -23,7 +23,7 @@ export default class GenresDelete extends Component {
                         this.props.history.push("/dashboard/genres"); 
                     }
                     else {
-                        console.log("Nie udało się usunąć gry");
+                        console.log("Nie udało się usunąć kategorii");
                     }
                 });
                 

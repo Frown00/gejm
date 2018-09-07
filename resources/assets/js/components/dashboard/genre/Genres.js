@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import GenresCreate from './GenresCreate';
-import GenresEdit from './GenresEdit';
+import GenreCreate from './GenreCreate';
+import GenreEdit from './GenreEdit';
 import GenresIndex from './GenresIndex';
 
-export default class Dashboard extends Component {
+export default class Genres extends Component {
     render() {
         return (
             <BrowserRouter>
@@ -15,8 +15,8 @@ export default class Dashboard extends Component {
 
                     <Switch>
                         <Route exact path='/dashboard/genres' component={ GenresIndex } />
-                        <Route path='/dashboard/genres/create' component={ GenresCreate } />
-                        <Route path='/dashboard/genres/:id/edit/' component={ GenresEdit } />
+                        <Route path='/dashboard/genres/create' component={ GenreCreate } />
+                        <Route path='/dashboard/genres/:id/edit/' component={ GenreEdit } />
                     </Switch>
                 </div>
                 

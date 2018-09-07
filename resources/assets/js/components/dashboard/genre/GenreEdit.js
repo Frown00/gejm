@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import GenresDelete from './GenresDelete';
+import GenreDelete from './GenreDelete';
 
-export default class GenresEdit extends Component{
+export default class GenreEdit extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -50,7 +50,7 @@ export default class GenresEdit extends Component{
         const updateHref = `http://gejm.pl/genres/${genreId}`;
         return (
             <div>
-                <GenresDelete id={genreId} name={this.state.name} history={this.props.history}/>
+                <GenreDelete id={genreId} name={this.state.name} history={this.props.history}/>
                 <form className="container" method="post" action={updateHref}>
                     <input type="hidden" name="_token" value={csrf_token} />
                     <input type='hidden' name='_method' value='PUT' />

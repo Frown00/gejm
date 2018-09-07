@@ -4,7 +4,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import GamesIndex from './GamesIndex';
 import GameCreate from './GameCreate';
 import GameEdit from './GameEdit';
-import Genres from './Genres';
+import Genres from './genre/Genres';
+import Platforms from './platforms/Platforms';
 
 export default class Dashboard extends Component {
     render() {
@@ -15,6 +16,7 @@ export default class Dashboard extends Component {
                         <a href="/dashboard" className="btn btn-dark panel">Dashboard</a>
                         <a href="/dashboard/create" className="btn panel add-game">Dodaj gre</a>
                         <a href="/dashboard/genres" className="btn panel category">Kategorie</a>
+                        <a href="/dashboard/platforms" className="btn panel platforms">Platformy</a>
                         <a href="#" className="btn panel raters">Oceniający</a>                    
                         <a href="#" className="btn panel reviewers">Recenzenci</a>
                         <a href="#" className="btn panel free-games">Darmowe gry</a>
@@ -25,6 +27,7 @@ export default class Dashboard extends Component {
                         <Route path='/dashboard/create' component={ GameCreate } />
                         <Route path='/dashboard/:id/edit/' component={ GameEdit } />
                         <Route path='/dashboard/genres' component={ Genres } />
+                        <Route path='/dashboard/platforms' component={ Platforms } />
                     </Switch>
                 </div>
                 

@@ -10503,18 +10503,23 @@ form > div > label {
   background-color: #1aa31a;
 }
 
-.raters {
+.platforms {
   color: white;
   background-color: green;
 }
 
-.reviewers {
+.raters {
   color: white;
   background-color: #1aa31a;
 }
 
-.free-games {
+.reviewers {
   color: white;
   background-color: green;
+}
+
+.free-games {
+  color: white;
+  background-color: #1aa31a;
 }
 
