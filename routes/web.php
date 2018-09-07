@@ -64,9 +64,33 @@ Route::middleware('auth')->group(function() {
         'as'=> 'games.update'
     ]); 
 
+
+    Route::get('/dashboard/genres', 'DashboardController@index');
+    Route::get('/dashboard/genres/create', 'DashboardController@index');
+    Route::get('/dashboard/genres/{id}/edit', 'DashboardController@index');
     Route::get('/genres', [
         'uses'=> 'GenresController@index',
         'as'=> 'genres.index'
+    ]);
+
+    Route::post('/genres', [
+        'uses'=> 'GenresController@store',
+        'as'=> 'genres.store'
+    ]);
+
+    Route::get('/genres/edit/{id}', [
+        'uses'=> 'GenresController@edit',
+        'as'=> 'genres.edit'
+    ]);
+
+    Route::put('/genres/{id}', [
+        'uses'=> 'GenresController@update',
+        'as'=> 'genres.update'
+    ]);
+
+    Route::get('/genres/delete/{id}', [
+        'uses'=> 'GenresController@destroy',
+        'as'=> 'genres.destroy'
     ]);
 
     Route::get('/platforms', [

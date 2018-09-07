@@ -256,6 +256,7 @@ class GameCreate extends Component {
             [property]: event.target.value,   // partialState[property] = value - { property: value} its same
         });
         
+        ///// Auto filling depending on specific values ////
         if(property === 'title') {
             this.setState({
             'slug': strToSlug(event.target.value)
@@ -279,8 +280,8 @@ class GameCreate extends Component {
                     'release_year': year
                 });
             }
-            
         }
+        /////////////////////////////////////////////////////
     }
 
     
