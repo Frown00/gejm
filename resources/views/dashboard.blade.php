@@ -7,6 +7,8 @@
             string = string.replace(/ /g, "-");
             return string;
         }
+
     </script>
     <div id="dashboard"></div>
+  
 @endsection

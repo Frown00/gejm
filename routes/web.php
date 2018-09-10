@@ -122,14 +122,60 @@ Route::middleware('auth')->group(function() {
         'as'=> 'platforms.destroy'
     ]);
 
+    Route::get('/dashboard/raters', 'DashboardController@index');
+    Route::get('/dashboard/raters/create', 'DashboardController@index');
+    Route::get('/dashboard/raters/{id}/edit', 'DashboardController@index');
     Route::get('/raters', [
         'uses'=> 'RatersController@index',
         'as'=> 'raters.index'
     ]);
 
+    Route::post('/raters', [
+        'uses'=> 'RatersController@store',
+        'as'=> 'Raters.store'
+    ]);
+
+    Route::get('/raters/edit/{id}', [
+        'uses'=> 'RatersController@edit',
+        'as'=> 'raters.edit'
+    ]);
+
+    Route::put('/raters/{id}', [
+        'uses'=> 'RatersController@update',
+        'as'=> 'raters.update'
+    ]);
+
+    Route::get('/raters/delete/{id}', [
+        'uses'=> 'RatersController@destroy',
+        'as'=> 'raters.destroy'
+    ]);
+
+    Route::get('/dashboard/reviewers', 'DashboardController@index');
+    Route::get('/dashboard/reviewers/create', 'DashboardController@index');
+    Route::get('/dashboard/reviewers/{id}/edit', 'DashboardController@index');
     Route::get('/reviewers', [
         'uses'=> 'ReviewersController@index',
-        'as'=> 'Reviewers.index'
+        'as'=> 'reviewers.index'
+    ]);
+
+    Route::post('/reviewers', [
+        'uses'=> 'ReviewersController@store',
+        'as'=> 'reviewers.store'
+    ]);
+
+    Route::get('/reviewers/edit/{id}', [
+        'uses'=> 'ReviewersController@edit',
+        'as'=> 'reviewers.edit'
+    ]);
+
+    Route::put('/reviewers/{id}', [
+        'uses'=> 'ReviewersController@update',
+        'as'=> 'reviewers.update'
+    ]);
+
+    Route::get('/reviewers/delete/{id}', [
+        'uses'=> 'ReviewersController@destroy',
+        'as'=> 'reviewers.destroy'
     ]);
 
     

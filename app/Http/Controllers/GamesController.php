@@ -61,7 +61,7 @@ class GamesController extends Controller
 
     //  Adding game
     public function store(GamesRequest $request) {
-        
+
         // Getting ids from game genres
         $genres = json_decode($request->input('genres'));
         $genresIdList = array();

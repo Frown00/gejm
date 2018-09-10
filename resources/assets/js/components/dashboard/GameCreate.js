@@ -308,9 +308,7 @@ class GameCreate extends Component {
         formData.append('slug', this.state.slug);
         formData.append('image_box', this.image_box);
         formData.append('genres', JSON.stringify(this.state.genres));
-        for(let i = 0; i < this.state.genres.length; i++) {
-            formData.append('genres[]', this.state.genres[i]);
-        }
+        
         // for (var pair of formData.entries()) {
         //     console.log(pair[0]+ ', ' + pair[1]); 
         // }
