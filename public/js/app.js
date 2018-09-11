@@ -15764,7 +15764,6 @@ __webpack_require__(40);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-__webpack_require__(63);
 __webpack_require__(76);
 __webpack_require__(126);
 
@@ -37993,13 +37992,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 63 */
-/***/ (function(module, __webpack_exports__) {
-
-"use strict";
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open 'D:\\wamp\\www\\sites\\gejm\\resources\\assets\\js\\components\\dashboard\\Example.js'");
-
-/***/ }),
+/* 63 */,
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -57394,11 +57387,6 @@ var Dashboard = function (_Component) {
                     { className: 'container' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        null,
-                        genres
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
                         { className: 'container', style: { paddingLeft: '0', marginBottom: '3em' } },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'a',
@@ -57408,7 +57396,7 @@ var Dashboard = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'a',
                             { href: '/dashboard/create', className: 'btn panel add-game' },
-                            'Dodaj gr'
+                            'Dodaj gr\u0119'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'a',
@@ -57436,7 +57424,6 @@ var Dashboard = function (_Component) {
                             'Darmowe gry'
                         )
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__GameCreate__["a" /* default */], null),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["d" /* Switch */],
                         null,
