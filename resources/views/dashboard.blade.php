@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 @section('content')
     <script> 
         var csrf_token = '<?php echo csrf_token(); ?>';

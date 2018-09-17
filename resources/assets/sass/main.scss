@@ -1,0 +1,19 @@
+// Variables
+@import 'variables';
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.navbar-gejm {
+    background-color: $primary-color;
+    color: $font-dark;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+
+    .logo {
+        max-height: 50px;
+        margin-left: 20px;
+    }
+}
+  

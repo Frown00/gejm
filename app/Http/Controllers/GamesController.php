@@ -54,6 +54,9 @@ class GamesController extends Controller
         $game['ratings'] = $ratings;
         $game['reviews'] = $reviews;
         $game['image_box'] = $imageBox;
+        $game['popularity'] = round($game->value('popularity'), 2);
+        $game['difficulty'] = round($game->value('difficulty'), 2);
+        $game['rating_avg'] = round($game->value('rating_avg'), 2);
 
         return response($game, 200)->header('Content-Type', 'application/json');;
     }
@@ -132,7 +135,6 @@ class GamesController extends Controller
     {   
         $game = new Game();
         $game = Game::where('slug', $slug)->first();
-        
         $genres = $game->genres()->select('*')->get();
         $platforms = $game->platforms()->select('*')->get();
         $ratings = $game->ratings()->select('*')->get();
@@ -144,6 +146,9 @@ class GamesController extends Controller
         $game['ratings'] = $ratings;
         $game['reviews'] = $reviews;
         $game['image_box'] = $imageBox;
+        $game['popularity'] = round($game->value('popularity'), 2);
+        $game['difficulty'] = round($game->value('difficulty'), 2);
+        $game['rating_avg'] = round($game->value('rating_avg'), 2);
 
         return response($game, 200)->header('Content-Type', 'application/json');;
     }
@@ -200,18 +205,26 @@ class GamesController extends Controller
 
         $game->reviews()->sync($reviewsArray);
 
-        $currentGameImage = GameImages::where('game_id', $game->id)->first();
-        if($currentGameImage) {
-            $path = $currentGameImage->path;
-            Storage::delete('public/upload/game-images/' . $path);
-            $currentGameImage->delete();
-        }
+
+        // Update game image
+        
+        
 
         if($request->file('image_box')) {
             $image = $request->file('image_box');
             $imageName = $image->getClientOriginalName();
             
             if($image !== null) {
+
+                // get current image if exists and delete
+                $currentGameImage = GameImages::where('game_id', $game->id)->first();   
+                if($currentGameImage) {
+                    $path = $currentGameImage->path;
+                    Storage::delete('public/upload/game-images/' . $path);
+                    $currentGameImage->delete();
+                }
+
+                // put new image
                 $path = Storage::putFileAs('public/upload/game-images', $image, $imageName);
                 $imageBox = new GameImages();
                 $imageBox->path = $imageName;

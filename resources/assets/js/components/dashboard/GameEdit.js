@@ -506,7 +506,7 @@ class GameEdit extends Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="requirements_detail">Wymagania szczegółowo: </label>
-                        <input id="requirements_detail" name="requirements_detail" className="form-control" type="text" value={this.state.requirements_detail} onChange={this.handleChange} />
+                        <textarea style={{height: '9em'}} id="requirements_detail" name="requirements_detail" className="form-control" type="text" value={this.state.requirements_detail} onChange={this.handleChange}></textarea>
                     </div>
                     <input name="reviews" type="hidden" value={JSON.stringify(this.state.reviews)} />
                     <div className="form-group">
@@ -555,7 +555,7 @@ class GameEdit extends Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="description">Krótki opis gry: </label>
-                        <input id="description" name="description" className="form-control" type="text" value={this.state.description} onChange={this.handleChange} />
+                        <textarea id="description" name="description" className="form-control" type="text" value={this.state.description} onChange={this.handleChange}></textarea>
                     </div>
                     <div className="form-group">
                         <label htmlFor="gameplay">Link do gameplayu: </label>

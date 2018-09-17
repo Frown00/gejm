@@ -16,7 +16,7 @@ class GenresController extends Controller
     public function store(Request $request) {
 
         foreach($request->input() as $key => $value) {
-            if(empty($value) && ($key == 'description')){
+            if(empty($value) && ($key == 'description' || $key == 'funky_name')){
                 $request->request->set($key, '');
             }    
         }

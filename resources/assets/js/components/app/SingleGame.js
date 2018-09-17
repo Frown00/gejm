@@ -19,6 +19,7 @@ class SingleGame extends Component {
             })
             .then(game => {
                 this.setState({ game });
+                document.title = "Gejm | " + game.title;
             });
     }
 

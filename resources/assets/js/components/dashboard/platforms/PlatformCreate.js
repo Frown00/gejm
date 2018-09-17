@@ -22,7 +22,7 @@ export default class PlatformCreate extends Component{
 
     render() {
         return (
-            <form className="container" method="post" action="http://gejm.pl/genres">
+            <form className="container" method="post" action="http://gejm.pl/platforms">
                 <input type="hidden" name="_token" value={csrf_token} />
 
                 <div className="form-group">

@@ -1,0 +1,62 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+
+
+.navbar-laravel {
+  background-color: $primary-color;
+  color: $font-dark;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+form > div > label {
+  font-weight: bold;
+  font-size: 1.3em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.btn.panel {
+  
+  margin-top: 0.5em; 
+}
+
+
+.add-game {
+  color: white;
+  background-color: green;
+}
+
+.category {
+  color: white;
+  background-color: rgb(26, 163, 26);
+}
+
+.platforms {
+  color: white;
+  background-color: green;
+
+}
+
+.raters {
+  color: white;
+  background-color: rgb(26, 163, 26);
+}
+
+.reviewers {
+  color: white;
+  background-color: green;
+
+}
+
+.free-games {
+  color: white;
+  background-color: rgb(26, 163, 26);
+}

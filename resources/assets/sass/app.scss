@@ -8,57 +8,80 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
-  background-color: #FFFF00;
-  color: #333333;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+body {
+  color: $font-dark;
 }
 
-.logo {
-  max-height: 110px;
-}
+ul.list {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  box-sizing: border-box;
 
-form > div > label {
-  font-weight: bold;
-  font-size: 1.3em;
-  margin-bottom: 1em;
-  margin-top: 1em;
-}
+  li {
+    width: 100%;
+    height: 500px;
+  }
+  .container {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    height: 100%;
 
-.btn.panel {
+    .scene {
+      width: 300px;
+      max-width: 100%;
+      height: 350px;
+      max-height: 100%;
+      perspective: 10000px;
   
-  margin-top: 0.5em; 
+      .game {
+        width: 300px;
+        max-width: 100%;
+        height: 350px;
+        max-height: 100%;
+        position: relative;
+        transition: transform 1s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+        
+      
+        &__data {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          backface-visibility: hidden;
+          
+          &--front {
+            background-color: #c0c0c0;
+          }
+    
+          &--back {
+            background-color: green;
+            transform: rotateY(-180deg);
+          }
+        }
+      
+        &.is-flipped {
+          transform: rotateY(-180deg);
+        }
+      }
+    }
+
+    .game__title {
+      color: $font-dark;
+    }
+  }
+  
+  
 }
 
 
-.add-game {
-  color: white;
-  background-color: green;
-}
 
-.category {
-  color: white;
-  background-color: rgb(26, 163, 26);
-}
 
-.platforms {
-  color: white;
-  background-color: green;
 
-}
 
-.raters {
-  color: white;
-  background-color: rgb(26, 163, 26);
-}
 
-.reviewers {
-  color: white;
-  background-color: green;
-
-}
-
-.free-games {
-  color: white;
-  background-color: rgb(26, 163, 26);
-}

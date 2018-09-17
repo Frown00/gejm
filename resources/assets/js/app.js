@@ -14,4 +14,4 @@ require('./bootstrap');
  */
 
 require('./components/dashboard/Dashboard.js');
-require('./components/App.js');
+require('./components/app/App.js');

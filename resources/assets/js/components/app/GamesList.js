@@ -1,6 +1,5 @@
-import axios from 'axios';
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import Game from './Game';
 
 class GamesList extends Component {
     constructor() {
@@ -13,6 +12,7 @@ class GamesList extends Component {
     }
 
     componentDidMount() {
+        document.title = "Gejm | Tanie granie";
         fetch('http://gejm.pl/api/games')
             .then(response => response.json())
             .then(
@@ -43,15 +43,12 @@ class GamesList extends Component {
                     {console.log(games)}
                     
                         
-                    <ul className='list-group list-group-flush'>
+                    <ul className='list'>
     
                         {games.map(game => (
-                            <Link
-                                className='list-group-item list-group-item-action d-flex justify-content-between align-items-center'
-                                to={`/${game.slug}`}
-                                key={game.id} >
-                                
-                                <div>
+                             
+                                <li key={game.id}>
+                                    {/* <div>
                                     <h5>{game.title}</h5>
                                     <h6>{game.developer}</h6>
                                     <h6>{game.publisher}</h6>
@@ -64,9 +61,9 @@ class GamesList extends Component {
                                     </span>
                                                  
                                     ))}
-                                </div>
-                                    
-                            </Link>
+                                </div> */}
+                                    <Game game={game} />                                    
+                                </li>
                          ))}
                     </ul>    
                 </div>
