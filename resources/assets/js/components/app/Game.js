@@ -1,35 +1,50 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import GameFront from './GameFront';
 import GameBack from './GameBack';
-
 
 export default class Game extends Component {
     constructor(props) {
         super(props);
         
         this.gameIsFlipped = this.gameIsFlipped.bind(this);
+        this.getGenreStyleClass = this.getGenreStyleClass.bind(this);
     }
 
     gameIsFlipped(event) {
-        let game = document.querySelector(".game");
+        let game = event.currentTarget;
         game.classList.toggle('is-flipped');
+    }
+
+    // Getting game genres and return class name with specific style for it
+    getGenreStyleClass(event) {
+        let mainGenre = this.props.game.main_genre.toLowerCase();
+        let styleClasses = {
+            "przygodowe": "adventure"
+        }
+        let styleClassName = styleClasses[mainGenre];
+        return styleClassName;
     }
     
     render() {
         let game = this.props.game;
-        console.log(game);
         return(
             <div className="container">
                 <div className="scene scene--game">
                     <div className="game" onClick={this.gameIsFlipped}>
-                        <GameFront title={game.title} image_box={game.image_box} />
-                        <GameBack />     
+                        <GameFront 
+                            id={game.id} 
+                            slug={game.slug} 
+                            title={game.title} 
+                            image_box={game.image_box} 
+                            titleStyle={this.getGenreStyleClass()} />
+                        
+                        <GameBack 
+                            id={game.id} 
+                            slug={game.slug} 
+                            title={game.title} 
+                            titleStyle={this.getGenreStyleClass()} />     
                     </div>
                 </div>
-                <Link to={`/${game.slug}`} key={game.id} >
-                    <div className="game game__title">{game.title}</div>
-                </Link>
             </div>
         )
     }

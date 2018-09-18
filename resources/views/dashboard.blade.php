@@ -5,6 +5,7 @@
 
         function strToSlug(string) {
             string = string.replace(/ /g, "-");
+            string = string.toLowerCase();
             return string;
         }
 
