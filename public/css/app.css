@@ -1,4 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);/*!
+@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+
+/*!
  * Bootstrap v4.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
@@ -10473,6 +10475,7 @@ a.text-dark:focus {
 
 body {
   color: #333333;
+  font-size: 0.9rem;
 }
 
 ul.list {
@@ -10498,7 +10501,7 @@ ul.list {
 
 ul.list li {
   width: 100%;
-  height: 456px;
+  height: 339.33333333px;
   max-height: 100%;
   margin-top: inherit;
 }
@@ -10519,9 +10522,9 @@ ul.list .container {
 }
 
 ul.list .container .scene {
-  width: 300px;
+  width: 200px;
   max-width: 100%;
-  height: 456px;
+  height: 339.33333333px;
   max-height: 100%;
   -webkit-perspective: 5000px;
           perspective: 5000px;
@@ -10547,15 +10550,15 @@ ul.list .container .scene .game__data {
           backface-visibility: hidden;
   background-color: #f8fafc;
   color: #333333;
-  width: 300px;
+  width: 200px;
   max-width: 100%;
-  height: 450px;
+  height: 233.33333333px;
   max-height: 100%;
 }
 
 ul.list .container .scene .game__data--front img {
-  width: 300px;
-  height: 350px;
+  width: 200px;
+  height: 233.33333333px;
   -o-object-fit: fill;
      object-fit: fill;
 }
@@ -10575,10 +10578,11 @@ ul.list .container .scene .game__data .game__title {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  width: 200px;
   height: 100px;
-  width: 300px;
   max-width: 100%;
   color: #333333;
+  background-color: #c0c0c0;
 }
 
 ul.list .container .scene .game__data .game__title--adventure {
@@ -10587,15 +10591,101 @@ ul.list .container .scene .game__data .game__title--adventure {
 }
 
 ul.list .container .scene .game__data .game__info {
-  background-color: #c0c0c0;
-  width: 300px;
+  background-color: #f8fafc;
+  width: 200px;
   max-width: 100%;
-  height: 350px;
+  height: 233.33333333px;
   max-height: 100%;
 }
 
 ul.list .container .scene .game.is-flipped {
   -webkit-transform: rotateY(-180deg);
           transform: rotateY(-180deg);
+}
+
+.icon-ratings {
+  font-size: 1rem;
+  margin-left: 0.1em;
+  line-height: 1.1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.icon-ratings .data-icon {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  white-space: nowrap;
+  font-size: 2em;
+  width: 5em;
+  overflow: hidden;
+}
+
+.icon-ratings .data-icon.computer {
+  letter-spacing: 0.066em;
+}
+
+.icon-ratings .data-icon.computer:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '\1F5B3\1F5B3\1F5B3\1F5B3\1F5B3';
+  color: lightgray;
+  white-space: nowrap;
+}
+
+.icon-ratings .data-icon.computer:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '\1F5B3\1F5B3\1F5B3\1F5B3\1F5B3';
+  color: blue;
+  background-color: #a1a1ff;
+  overflow: hidden;
+}
+
+.icon-ratings .data-icon.skull:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '\2620\2620\2620\2620\2620';
+  color: lightgray;
+}
+
+.icon-ratings .data-icon.skull:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '\2620\2620\2620\2620\2620';
+  color: black;
+  background-color: #bdbdbd;
+  overflow: hidden;
+}
+
+.icon-ratings .data-icon.heart {
+  letter-spacing: 0.4em;
+}
+
+.icon-ratings .data-icon.heart:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '\2661\2661\2661\2661\2661';
+  color: lightgray;
+}
+
+.icon-ratings .data-icon.heart:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '\2661\2661\2661\2661\2661';
+  color: red;
+  background-color: #ff9191;
+  overflow: hidden;
 }
 

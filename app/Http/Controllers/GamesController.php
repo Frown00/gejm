@@ -54,9 +54,9 @@ class GamesController extends Controller
         $game['ratings'] = $ratings;
         $game['reviews'] = $reviews;
         $game['image_box'] = $imageBox;
-        $game['popularity'] = round($game->value('popularity'), 2);
-        $game['difficulty'] = round($game->value('difficulty'), 2);
-        $game['rating_avg'] = round($game->value('rating_avg'), 2);
+        $game['popularity'] = round(DB::table('games')->where('slug', $slug)->value('popularity'), 2);  
+        $game['difficulty'] = round(DB::table('games')->where('slug', $slug)->value('difficulty'), 2); 
+        $game['rating_avg'] = round(DB::table('games')->where('slug', $slug)->value('rating_avg'), 2); 
 
         return response($game, 200)->header('Content-Type', 'application/json');;
     }
@@ -146,9 +146,11 @@ class GamesController extends Controller
         $game['ratings'] = $ratings;
         $game['reviews'] = $reviews;
         $game['image_box'] = $imageBox;
-        $game['popularity'] = round($game->value('popularity'), 2);
-        $game['difficulty'] = round($game->value('difficulty'), 2);
-        $game['rating_avg'] = round($game->value('rating_avg'), 2);
+
+        // Round values, cause for instance 2,47 lose precison
+        $game['popularity'] = round(DB::table('games')->where('slug', $slug)->value('popularity'), 2);  
+        $game['difficulty'] = round(DB::table('games')->where('slug', $slug)->value('difficulty'), 2); 
+        $game['rating_avg'] = round(DB::table('games')->where('slug', $slug)->value('rating_avg'), 2); 
 
         return response($game, 200)->header('Content-Type', 'application/json');;
     }

@@ -1,22 +1,20 @@
-// Brand colors
-$primary-color: #ffff00;
-$secondary-color: #ffed4a;
-
-// Body
-$default-bgc: #f8fafc;
-
 // Typography
 $font-family-sans-serif: "Nunito", sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
-$font-dark: #333333;
-$font-bright: #f8fafc;
+// Game card sizes
+$card-data-x: 200px;
+$card-data-y: 7/6 * $card-data-x;
+$title-stripe-x: $card-data-x;
+$title-stripe-y: 100px;
+$card-frame: 3px;
+$card-height: $card-data-y + $title-stripe-y + (2 * $card-frame);
 
-// Genres Colors
-$adventure: #e3342f;
 
-
+// Colors
+$default-bgc: #f8fafc;
+$title-default: #c0c0c0;
 $blue: #3490dc;
 $indigo: #6574cd;
 $purple: #9561e2;
@@ -27,3 +25,14 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+
+// Brand colors
+$primary-color: #ffff00;
+$secondary-color: #ffed4a;
+
+// Genres Colors
+$adventure: #e3342f;
+
+// Font colors
+$font-dark: #333333;
+$font-bright: #f8fafc;

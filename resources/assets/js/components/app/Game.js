@@ -41,7 +41,10 @@ export default class Game extends Component {
                         <GameBack 
                             id={game.id} 
                             slug={game.slug} 
-                            title={game.title} 
+                            title={game.title}
+                            popularity={game.popularity}
+                            difficulty={game.difficulty}
+                            requirements={game.requirements}
                             titleStyle={this.getGenreStyleClass()} />     
                     </div>
                 </div>

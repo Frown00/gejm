@@ -10,6 +10,7 @@
 
 body {
   color: $font-dark;
+  font-size: $font-size-base;
 }
 
 ul.list {
@@ -24,7 +25,7 @@ ul.list {
 
   li {
     width: 100%;
-    height: 456px;
+    height: $card-height;
     max-height: 100%;
     margin-top: inherit;
   }
@@ -36,9 +37,9 @@ ul.list {
     max-height: 100%;
 
     .scene {
-      width: 300px;
+      width: $card-data-x;
       max-width: 100%;
-      height: 456px;
+      height: $card-height;
       max-height: 100%;
       perspective: 5000px;
 
@@ -47,7 +48,7 @@ ul.list {
         height: 100%;
         
         position: relative;
-        border: 3px solid #333333;
+        border: $card-frame solid #333333;
         transition: transform 1s;
         transform-style: preserve-3d;
         cursor: pointer;
@@ -57,15 +58,15 @@ ul.list {
           backface-visibility: hidden;
           background-color: $default-bgc;
           color: $font-dark;
-          width: 300px;
+          width: $card-data-x;
           max-width: 100%;
-          height: 450px;
+          height: $card-data-y;
           max-height: 100%;
           
           &--front {
             img {
-              width: 300px;
-              height: 350px; 
+              width: $card-data-x;
+              height: $card-data-y; 
               object-fit: fill;
             }
           }
@@ -78,23 +79,27 @@ ul.list {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100px;
-            width: 300px;
-            max-width: 100%;
-            color: $font-dark;
             
+            width: $title-stripe-x;
+            height: $title-stripe-y;
+            max-width: 100%;
+            
+            color: $font-dark;
+            background-color: $title-default;
+
             &--adventure {    // Przygodowy
               background-color: $adventure;
               color: $font-bright;
+
             }
             
           }
   
           .game__info {
-            background-color: #c0c0c0;
-            width: 300px;
+            background-color: $default-bgc;
+            width: $card-data-x;
             max-width: 100%;
-            height: 350px; 
+            height: $card-data-y; 
             max-height: 100%;
           }
         }
@@ -105,12 +110,97 @@ ul.list {
         }
       }
     }
-
-    
+  
   }
   
   
 }
+
+
+// icon data visualization
+.icon-ratings {
+  font-size: 1rem;
+  margin-left: 0.1em;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  
+  .data-icon {
+    position: relative;
+    display: inline-block;
+    color: transparent;
+    white-space: nowrap;
+
+    font-size: 2em; // xem * 16px 
+    width: 5 * 1em; // 1em = current font-size
+    overflow: hidden;
+    &.computer {
+      letter-spacing: 0.066em;
+    }
+  
+    &.computer:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '🖳🖳🖳🖳🖳';
+      color: lightgray;
+      white-space: nowrap;
+    }
+  
+    &.computer:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '🖳🖳🖳🖳🖳';
+      color: blue;
+      background-color: #a1a1ff;
+      overflow: hidden;
+    }
+  
+    &.skull:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '☠☠☠☠☠';
+      color: lightgray;
+    }
+  
+    &.skull:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '☠☠☠☠☠';
+      color: black;
+      background-color: #bdbdbd;
+      overflow: hidden;
+    }
+  
+    &.heart {
+      letter-spacing: 0.4em;
+    }
+
+    
+
+    &.heart:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '♡♡♡♡♡';
+      color: lightgray;
+    }
+  
+    &.heart:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '♡♡♡♡♡';
+      color: red;
+      background-color: #ff9191;
+      overflow: hidden;
+    }
+  }
+}
+
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Game;
 
 class GamesAPIController extends Controller
@@ -22,9 +23,9 @@ class GamesAPIController extends Controller
             $game['ratings'] = $ratings;
             $game['reviews'] = $reviews;
             $game['image_box'] = $imageBox[0];
-            $game['popularity'] = round($game->value('popularity'), 2);
-            $game['difficulty'] = round($game->value('difficulty'), 2);
-            $game['rating_avg'] = round($game->value('rating_avg'), 2);
+            $game['popularity'] = round(DB::table('games')->where('id', $game->id)->value('popularity'), 2);  
+            $game['difficulty'] = round(DB::table('games')->where('slug', $game->id)->value('difficulty'), 2); 
+            $game['rating_avg'] = round(DB::table('games')->where('slug', $game->id)->value('rating_avg'), 2); 
            
         }
 
@@ -44,7 +45,10 @@ class GamesAPIController extends Controller
         $game['platforms'] = $platforms;
         $game['ratings'] = $ratings;
         $game['reviews'] = $reviews;
-        $game['image_box'] = base64_encode($game['image_box']);
+        $game['image_box'] = $imageBox[0];
+        $game['popularity'] = round(DB::table('games')->where('slug', $slug)->value('popularity'), 2);  
+        $game['difficulty'] = round(DB::table('games')->where('slug', $slug)->value('difficulty'), 2); 
+        $game['rating_avg'] = round(DB::table('games')->where('slug', $slug)->value('rating_avg'), 2); 
 
         return response($game, 200)->header('Content-Type', 'application/json');
     }
