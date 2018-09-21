@@ -24,8 +24,8 @@ class GamesAPIController extends Controller
             $game['reviews'] = $reviews;
             $game['image_box'] = $imageBox[0];
             $game['popularity'] = round(DB::table('games')->where('id', $game->id)->value('popularity'), 2);  
-            $game['difficulty'] = round(DB::table('games')->where('slug', $game->id)->value('difficulty'), 2); 
-            $game['rating_avg'] = round(DB::table('games')->where('slug', $game->id)->value('rating_avg'), 2); 
+            $game['difficulty'] = round(DB::table('games')->where('id', $game->id)->value('difficulty'), 2); 
+            $game['rating_avg'] = round(DB::table('games')->where('id', $game->id)->value('rating_avg'), 2); 
            
         }
 
@@ -40,6 +40,7 @@ class GamesAPIController extends Controller
         $platforms = $game->platforms()->select('name', 'company')->get();
         $ratings = $game->ratings()->select('name', 'rating')->get();
         $reviews = $game->reviews()->select('name', 'link')->get();
+        $imageBox = $game->imageBox()->select('id','game_id', 'path')->get();
         
         $game['genres'] = $genres;
         $game['platforms'] = $platforms;

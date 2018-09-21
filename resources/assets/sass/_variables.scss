@@ -1,14 +1,23 @@
+// Mixins
+@mixin margin-auto {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}
+
 // Typography
 $font-family-sans-serif: "Nunito", sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Game card sizes
-$card-data-x: 200px;
+$card-data-x: 300px;
 $card-data-y: 7/6 * $card-data-x;
 $title-stripe-x: $card-data-x;
 $title-stripe-y: 100px;
-$card-frame: 3px;
+$card-frame: 2px;
 $card-height: $card-data-y + $title-stripe-y + (2 * $card-frame);
 
 

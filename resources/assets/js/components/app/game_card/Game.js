@@ -42,6 +42,11 @@ export default class Game extends Component {
                             id={game.id} 
                             slug={game.slug} 
                             title={game.title}
+                            mainGenre={game.main_genre}
+                            genres={game.genres}
+                            ratingAvg={game.rating_avg}
+                            gameTime={game.game_time}
+                            releaseYear={game.release_year}
                             popularity={game.popularity}
                             difficulty={game.difficulty}
                             requirements={game.requirements}

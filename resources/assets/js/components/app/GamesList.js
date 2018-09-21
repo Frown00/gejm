@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Game from './Game';
+import Game from './game_card/Game';
 
 class GamesList extends Component {
     constructor() {
