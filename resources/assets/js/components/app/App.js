@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Header from './Header';
+import Header from './panel/Header';
 import GamesList from './GamesList';
 import SingleGame from './SingleGame';
 

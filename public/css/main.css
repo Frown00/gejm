@@ -3,15 +3,63 @@ img {
   max-height: 100%;
 }
 
-.navbar-gejm {
+header.site-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   background-color: #ffff00;
   color: #333333;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.navbar-gejm .logo {
-  max-height: 50px;
+header.site-header nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header.site-header nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 200px;
+  max-width: 300px;
+  list-style: none;
+  padding: 0;
+  margin: 0 20px 0 0;
+}
+
+header.site-header nav ul a {
+  text-decoration: none;
+}
+
+header.site-header nav .nav__text {
+  display: none;
+}
+
+header.site-header nav .nav__icon {
+  font-size: 2rem;
+  color: #333333;
+}
+
+header.site-header div {
   margin-left: 20px;
+}
+
+header.site-header div .logo {
+  max-height: 50px;
 }
 

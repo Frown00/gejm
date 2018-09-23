@@ -8,10 +8,35 @@ export default class Game extends Component {
         
         this.gameIsFlipped = this.gameIsFlipped.bind(this);
         this.getGenreStyleClass = this.getGenreStyleClass.bind(this);
+        this.stopPropagation = this.stopPropagation.bind(this);
+    }
+
+    
+    componentDidMount() {
+        let hearts = document.querySelectorAll('.image-heart');
+        console.log(hearts);
+        for(let i = 0; i < hearts.length; i++) {
+            hearts[i].addEventListener('click', this.stopPropagation);
+        };
+        
+        
+    }
+
+    componentWillUnmount() {
+        let hearts = document.querySelectorAll('.image-heart');
+        console.log('od');
+        for(let i = 0; i < hearts.length; i++) {
+            hearts[i].removeEventListener('click', this.stopPropagation);
+        };
+    }
+
+    stopPropagation(event) {
+        event.stopPropagation();
     }
 
     gameIsFlipped(event) {
         let game = event.currentTarget;
+
         game.classList.toggle('is-flipped');
     }
 
@@ -34,10 +59,12 @@ export default class Game extends Component {
                         <GameFront 
                             id={game.id} 
                             slug={game.slug} 
-                            title={game.title} 
+                            title={game.title}
+                            ratingAvg={game.rating_avg} 
                             image_box={game.image_box} 
                             titleStyle={this.getGenreStyleClass()} />
-                        
+                        <span className="image-heart">❤</span>
+
                         <GameBack 
                             id={game.id} 
                             slug={game.slug} 

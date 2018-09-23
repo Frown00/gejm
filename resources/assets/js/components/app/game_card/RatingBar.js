@@ -29,7 +29,7 @@ export default class RatingBar extends Component {
             
             <div id={this.props.id}>
                 <div>{this.props.label}</div>
-                <div style={{}} className={'data-icon'+ ' ' + this.props.class + ' ' + this.props.class + this.props.itemId +'--fill'}>{this.props.content}</div>
+                <div className={'data-icon'+ ' ' + this.props.class + ' ' + this.props.class + this.props.itemId +'--fill'}>{this.props.content}</div>
             </div>
         )
     }

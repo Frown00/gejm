@@ -49,8 +49,8 @@ export default class GameBack extends Component {
                             <RatingBar itemId={this.props.id} id="requirements" class="computer" label="Wymagania" content="🖳🖳🖳🖳🖳" value={this.props.requirements} amount="5" />
                         </div>
                         <div className="genres">
-                            {this.props.genres.map(genre => (
-                                <span>{genre.name} </span>
+                            {this.props.genres.map((genre, key) => (
+                                <span key={key}>{genre.name} </span>
                             ))}
                         </div>
                     </div>

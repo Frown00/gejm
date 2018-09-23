@@ -10533,6 +10533,7 @@ ul.list .container .scene {
 ul.list .container .scene .game {
   width: 100%;
   height: 100%;
+  border-radius: 3%;
   position: relative;
   border: 2px solid #333333;
   -webkit-transition: -webkit-transform 1s;
@@ -10552,8 +10553,10 @@ ul.list .container .scene .game__data {
   color: #333333;
   width: 300px;
   max-width: 100%;
-  height: 350px;
+  height: 454px;
   max-height: 100%;
+  border-radius: 3%;
+  overflow: hidden;
 }
 
 ul.list .container .scene .game__data--front img {
@@ -10614,7 +10617,20 @@ ul.list .container .scene .game.is-flipped {
   background: #777777;
 }
 
-.game-heading .rating-badge {
+.game-heading .main-genre {
+  width: 100px;
+  max-width: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.rating-badge {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10632,7 +10648,7 @@ ul.list .container .scene .game.is-flipped {
   border: 2px solid #006800;
 }
 
-.game-heading .rating-badge span {
+.rating-badge span {
   color: white;
   text-transform: uppercase;
   text-align: center;
@@ -10645,17 +10661,24 @@ ul.list .container .scene .game.is-flipped {
   padding: 0.5em 0.6em 0.5em 0.6em;
 }
 
-.game-heading .main-genre {
-  width: 100px;
-  max-width: 100px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  margin-right: 20px;
-  text-align: center;
+.image-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 0;
+}
+
+.image-heart {
+  position: absolute;
+  bottom: 100px;
+  right: 10px;
+  font-size: 4rem;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.image-heart:hover {
+  color: #e3342f;
 }
 
 .game-body {

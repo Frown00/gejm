@@ -19,7 +19,7 @@ $title-stripe-x: $card-data-x;
 $title-stripe-y: 100px;
 $card-frame: 2px;
 $card-height: $card-data-y + $title-stripe-y + (2 * $card-frame);
-
+$card-round: 3%;
 
 // Colors
 $default-bgc: #f8fafc;

@@ -6,14 +6,48 @@ img {
     max-height: 100%;
 }
 
-.navbar-gejm {
+header.site-header {
+    display: flex;
+    justify-content: space-between;
     background-color: $primary-color;
     color: $font-dark;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 
-    .logo {
-        max-height: 50px;
-        margin-left: 20px;
+    nav {
+        display: flex;
+        align-items: center;
+        
+        ul {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 200px;
+            max-width: 300px;
+            list-style: none;
+            padding: 0;
+            margin: 0 20px 0 0;
+
+            a {
+                text-decoration: none;
+            }
+        }
+
+        .nav__text {
+            display: none;
+        }
+
+        .nav__icon {
+            font-size: 2rem;
+            color: $font-dark;
+        }
     }
+
+    div {
+        margin-left: 20px;
+        .logo {
+            max-height: 50px;
+        }
+    }
+    
 }
   
