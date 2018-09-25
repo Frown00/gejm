@@ -13,35 +13,54 @@ body {
   font-size: $font-size-base;
 }
 
+
+////////  FILTER BOX  ////////
 .button {
+  background: $primary-color;
+  border: 0;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+
+  &:focus {
+    outline: 0;
+  }
+
   &__filter {
       position: fixed;
+      font-size: 1em;
+      font-weight: 900;
       top: 75px;
-      right: 30px;
+      right: 10px;
       z-index: 4;
-      
+      padding: 0.5em 1.5em 0.5em 1.5em;
+      border-radius: 10%;
+
+      --active {
+
+      }
   }
+  
 }
 
 section.filters-container {
-  
-  background: $secondary-color;
+  background: whitesmoke;
   position: fixed;
   width: 100%;
   top: 73px;
   z-index: 3;
   display: none;
-  
+  height: calc(100% - 73px);
+  max-height: 100%;
+  overflow-y: scroll;
+  animation: slide-up .5s ease-out;
 
   &--active {
     display: flex;
     align-items: center;
     flex-direction: column;
-    animation: slide-down .3s ease-out;
+    animation: slide-down .5s ease-out;
   }
 
-  
-  
   @keyframes slide-up {
     0% { opacity: 1; transform: translateY(0);display: inline-flex}
     99% { opacity: 0; transform: translateY(-100%); display: inline-flex}
@@ -52,15 +71,73 @@ section.filters-container {
     100% { opacity: 1; transform: translateY(0);}
   }
 
-
+  div:nth-child(1) {
+    margin-top: 3em;
+  }
   div {
-    height: 3em;
-    margin-top: 1em;
+    flex: 1 1;
+    width: 100%;
+    padding: 1em 1em 1em 1em;
     border-bottom: 1px solid #c0c0c0;
   }
   
 }
 
+section.platform-filter {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  justify-content: center;
+  
+  .platform-filter__name {
+    flex: 1 1 100px;
+    
+    text-align: center;
+    padding: 0.5em 0.75em 0.5em 0.75em;
+    margin: 0.5em 0.5em 0.5em 0.5em;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 8%;
+    background: $secondary-color;
+    cursor: pointer;
+  }
+}
+
+section.genres-filter {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  justify-content: center;
+  
+  .genres-filter__name {
+    flex: 1 1 110px;
+    text-align: center;
+    padding: 0.5em 1em 0.5em 1em;
+    margin: 0.5em 0.5em 0.5em 0.5em;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 8%;
+    background: $secondary-color;
+    cursor: pointer;
+  }
+}
+
+section.alphabetic-filter {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  justify-content: center;
+  .alphabetic-filter__column {
+    flex: 1 1 100px;
+    margin-top: 1em;
+    background: #fff;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    padding: 0.5em 1em 0.5em 1em;
+  }
+
+  .alphabetic-filter__arrow {
+
+  }
+}
+////////    END FILTER BOX STYLING    ////////
 ////////    GAME CARD STYLING   ////////
 
 ul.list {
@@ -71,7 +148,7 @@ ul.list {
   justify-content: space-between;
   list-style: none;
   box-sizing: border-box;
-  margin-top: 3em;
+  margin-top: 2em;
 
   li {
     width: 100%;
@@ -189,11 +266,10 @@ ul.list {
   align-items: center;
   justify-content: center;
   background: darkgreen;
-  font-size: 1.5em;
-  width: 75px;
-  height: 75px;
+  font-size: 1.2em;
+  width: 3em;
+  height: 3em;
   border-radius: 50%;
-  border: 2px solid rgb(0, 104, 0);
   span {
     color: white;
     text-transform: uppercase;
@@ -202,9 +278,8 @@ ul.list {
     font-size: 1em;
     z-index: 1;
     background: green;
-    border: 3px solid green;
     border-radius: 50%;
-    padding: 0.5em 0.6em 0.5em 0.6em;
+    padding: 0.5em 0.75em 0.5em 0.75em;
   }
 }
 

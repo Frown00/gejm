@@ -41,7 +41,7 @@ class GamesList extends Component {
         } else {
             return(
                 <div>
-                    <Filters />
+                    <Filters columns={Object.keys(games[0])}/>
                     <ul className='list'>
     
                         {games.map(game => (

@@ -20,4 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('games', 'GamesAPIController@index');
 
 Route::get('games/{slug}', 'GamesAPIController@show');
+Route::get('platforms', 'PlatformsController@index');
+Route::get('genres', 'GenresController@index');
 

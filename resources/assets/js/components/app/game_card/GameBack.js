@@ -5,11 +5,7 @@ import RatingBadge from './RatingBadge';
 
 export default class GameBack extends Component {
     
-    componentDidMount() {
-        
-
-        // popularity.pseudoStyle("after", "color", "#ffff00");
-    }
+    
     render() {
         return (
             <div className="game__data game__data--back">
@@ -17,17 +13,20 @@ export default class GameBack extends Component {
                     <div className="game-heading">
                         <RatingBadge value={this.props.ratingAvg} />
                         <div className="main-genre">
+                        {/* TODO include content below in component */}
+
                             <div className="genres-badge genres-badge--yellow">
                                 <div className="genres-badge__circle">
                                     <img src="/images/genres/adventure2.png" />    
                                 </div>
                                 <div className="genres-badge__ribbon">
-                                    <span>Przygodowe</span>   
+                                    <span>{this.props.mainGenre}</span>   
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="game-body">
+                        {/* TODO include content below in component */}
                         <div className="numbers">
                             <div className="numbers__info">
                                 <img src="/images/calendar.png"/>
@@ -40,9 +39,9 @@ export default class GameBack extends Component {
                             <div className="numbers__info">
                                 <img src="/images/people.png"/>
                                 <p>1-3</p> 
-                            </div>
-                            
+                            </div>   
                         </div>
+
                         <div className="icon-ratings"> 
                             <RatingBar itemId={this.props.id} id="popularity" class="heart" label="Popularność" content="♡♡♡♡♡" value={this.props.popularity}  amount="5"/>
                             <RatingBar itemId={this.props.id} id="difficulty" class="skull" label="Trudność" content="☠☠☠☠☠" value={this.props.difficulty} amount="5"/>

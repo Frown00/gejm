@@ -10478,20 +10478,41 @@ body {
   font-size: 0.9rem;
 }
 
+.button {
+  background: #ffff00;
+  border: 0;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.button:focus {
+  outline: 0;
+}
+
 .button__filter {
   position: fixed;
+  font-size: 1em;
+  font-weight: 900;
   top: 75px;
-  right: 30px;
+  right: 10px;
   z-index: 4;
+  padding: 0.5em 1.5em 0.5em 1.5em;
+  border-radius: 10%;
 }
 
 section.filters-container {
-  background: #ffed4a;
+  background: whitesmoke;
   position: fixed;
   width: 100%;
   top: 73px;
   z-index: 3;
   display: none;
+  height: calc(100% - 73px);
+  max-height: 100%;
+  overflow-y: scroll;
+  -webkit-animation: slide-up .5s ease-out;
+          animation: slide-up .5s ease-out;
 }
 
 section.filters-container--active {
@@ -10505,8 +10526,8 @@ section.filters-container--active {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-animation: slide-down .3s ease-out;
-          animation: slide-down .3s ease-out;
+  -webkit-animation: slide-down .5s ease-out;
+          animation: slide-down .5s ease-out;
 }
 
 @-webkit-keyframes slide-up {
@@ -10589,10 +10610,92 @@ section.filters-container--active {
   }
 }
 
+section.filters-container div:nth-child(1) {
+  margin-top: 3em;
+}
+
 section.filters-container div {
-  height: 3em;
-  margin-top: 1em;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1;
+          flex: 1 1;
+  width: 100%;
+  padding: 1em 1em 1em 1em;
   border-bottom: 1px solid #c0c0c0;
+}
+
+section.platform-filter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  white-space: nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+section.platform-filter .platform-filter__name {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 100px;
+          flex: 1 1 100px;
+  text-align: center;
+  padding: 0.5em 0.75em 0.5em 0.75em;
+  margin: 0.5em 0.5em 0.5em 0.5em;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 8%;
+  background: #ffed4a;
+  cursor: pointer;
+}
+
+section.genres-filter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  white-space: nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+section.genres-filter .genres-filter__name {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 110px;
+          flex: 1 1 110px;
+  text-align: center;
+  padding: 0.5em 1em 0.5em 1em;
+  margin: 0.5em 0.5em 0.5em 0.5em;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 8%;
+  background: #ffed4a;
+  cursor: pointer;
+}
+
+section.alphabetic-filter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  white-space: nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+section.alphabetic-filter .alphabetic-filter__column {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 100px;
+          flex: 1 1 100px;
+  margin-top: 1em;
+  background: #fff;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  padding: 0.5em 1em 0.5em 1em;
 }
 
 ul.list {
@@ -10613,7 +10716,7 @@ ul.list {
   list-style: none;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  margin-top: 3em;
+  margin-top: 2em;
 }
 
 ul.list li {
@@ -10758,11 +10861,10 @@ ul.list .container .scene .game.is-flipped {
       -ms-flex-pack: center;
           justify-content: center;
   background: darkgreen;
-  font-size: 1.5em;
-  width: 75px;
-  height: 75px;
+  font-size: 1.2em;
+  width: 3em;
+  height: 3em;
   border-radius: 50%;
-  border: 2px solid #006800;
 }
 
 .rating-badge span {
@@ -10773,9 +10875,8 @@ ul.list .container .scene .game.is-flipped {
   font-size: 1em;
   z-index: 1;
   background: green;
-  border: 3px solid green;
   border-radius: 50%;
-  padding: 0.5em 0.6em 0.5em 0.6em;
+  padding: 0.5em 0.75em 0.5em 0.75em;
 }
 
 .image-badge {

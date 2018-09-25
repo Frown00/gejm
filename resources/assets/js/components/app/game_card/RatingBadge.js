@@ -5,7 +5,7 @@ export default class RatingBadge extends Component {
         return(
             <div className="rating-badge">
                 <span>
-                    {this.props.value}
+                    {Math.ceil(this.props.value * 10)}
                 </span>
             </div>
         )
