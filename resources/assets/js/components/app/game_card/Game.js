@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GameFront from './GameFront';
 import GameBack from './GameBack';
+import RatingBadge from './RatingBadge';
 
 export default class Game extends Component {
     constructor(props) {
@@ -13,20 +14,18 @@ export default class Game extends Component {
 
     
     componentDidMount() {
-        let hearts = document.querySelectorAll('.image-heart');
-        console.log(hearts);
-        for(let i = 0; i < hearts.length; i++) {
-            hearts[i].addEventListener('click', this.stopPropagation);
+        let marks = document.querySelectorAll('.image-mark');
+        for(let i = 0; i < marks.length; i++) {
+            marks[i].addEventListener('click', this.stopPropagation);
         };
         
         
     }
 
     componentWillUnmount() {
-        let hearts = document.querySelectorAll('.image-heart');
-        console.log('od');
-        for(let i = 0; i < hearts.length; i++) {
-            hearts[i].removeEventListener('click', this.stopPropagation);
+        let marks = document.querySelectorAll('.image-mark');
+        for(let i = 0; i < marks.length; i++) {
+            marks[i].removeEventListener('click', this.stopPropagation);
         };
     }
 
@@ -40,6 +39,7 @@ export default class Game extends Component {
         game.classList.toggle('is-flipped');
     }
 
+    // TODO add more genres
     // Getting game genres and return class name with specific style for it
     getGenreStyleClass(event) {
         let mainGenre = this.props.game.main_genre.toLowerCase();
@@ -63,8 +63,7 @@ export default class Game extends Component {
                             ratingAvg={game.rating_avg} 
                             image_box={game.image_box} 
                             titleStyle={this.getGenreStyleClass()} />
-                        <span className="image-heart">❤</span>
-
+                        
                         <GameBack 
                             id={game.id} 
                             slug={game.slug} 

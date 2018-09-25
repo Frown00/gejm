@@ -6,9 +6,9 @@ export default class Navbar extends Component {
         return (
             <nav>
                 <ul>
-                    <li>Szukaj</li>
-                    <li><a href="#"><span className="nav__text">Polubione</span><span className="nav__icon">❤</span></a></li>
-                    <li><a href="#"><span className="nav__text">O stronie</span><span className="nav__icon">🛈</span></a></li>
+                    <li><a href="#"><span className="nav__text">Okazje</span><i className="nav__icon fab fa-hotjar"></i></a></li>
+                    <li><a href="#"><span className="nav__text">Polubione</span><i className="nav__icon fas fa-gamepad"></i></a></li>
+                    <li><a href="#"><span className="nav__text">O stronie</span><i className="nav__icon fas fa-info-circle"></i></a></li>
                 </ul>
             </nav>
         )

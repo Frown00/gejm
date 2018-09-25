@@ -12,6 +12,7 @@ class App extends Component {
             <BrowserRouter>
                 <div>
                     <Header />
+                    
                     <Switch>
                         <Route exact path='/' component={ GamesList } />
                         <Route path='/:id' component={ SingleGame } />

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Game from './game_card/Game';
+import Filters from './panel/Filters';
 
 class GamesList extends Component {
     constructor() {
@@ -40,28 +41,12 @@ class GamesList extends Component {
         } else {
             return(
                 <div>
-                    {console.log(games)}
-                    
-                        
+                    <Filters />
                     <ul className='list'>
     
                         {games.map(game => (
                              
                                 <li key={game.id}>
-                                    {/* <div>
-                                    <h5>{game.title}</h5>
-                                    <h6>{game.developer}</h6>
-                                    <h6>{game.publisher}</h6>
-                                </div>
-                                <div>
-                                    {(game.genres).map((genre, index) => (
-                                        
-                                    <span key={index} className='badge badge-primary badge-pill'>
-                                        {genre.name}
-                                    </span>
-                                                 
-                                    ))}
-                                </div> */}
                                     <Game game={game} />                                    
                                 </li>
                          ))}

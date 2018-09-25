@@ -7,13 +7,18 @@ header.site-header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 5;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
   background-color: #ffff00;
   color: #333333;
-  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  padding: 10px;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
 
 header.site-header nav {
@@ -29,9 +34,8 @@ header.site-header nav ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -39,7 +43,7 @@ header.site-header nav ul {
   max-width: 300px;
   list-style: none;
   padding: 0;
-  margin: 0 20px 0 0;
+  margin: 0;
 }
 
 header.site-header nav ul a {
@@ -51,7 +55,7 @@ header.site-header nav .nav__text {
 }
 
 header.site-header nav .nav__icon {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #333333;
 }
 

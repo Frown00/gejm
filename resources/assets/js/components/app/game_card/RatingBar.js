@@ -6,7 +6,6 @@ export default class RatingBar extends Component {
     componentDidMount() {
         let value = this.props.value;
         value = value / this.props.amount * 100;
-        console.log(value);
         
         let sheet;
         if(!document.getElementById('rating-styles')) {
@@ -18,7 +17,6 @@ export default class RatingBar extends Component {
 
         sheet.innerHTML += `.data-icon.${this.props.class + this.props.itemId}--fill::after {width: ${value + '%'}}`;
         document.body.appendChild(sheet);
-        console.log(sheet);
     }
 
     render() {
