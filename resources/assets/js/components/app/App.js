@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './panel/Header';
 import GamesList from './GamesList';
-import SingleGame from './SingleGame';
+import SingleGame from './game_details/SingleGame';
 
 
 class App extends Component {
@@ -14,8 +14,8 @@ class App extends Component {
                     <Header />
                     
                     <Switch>
-                        <Route exact path='/' component={ GamesList } />
-                        <Route path='/:id' component={ SingleGame } />
+                        <Route exact path='/sites/gejm/public' component={ GamesList } />
+                        <Route path='/sites/gejm/public/:id' component={ SingleGame } />
                     </Switch>
                 </div>
                 

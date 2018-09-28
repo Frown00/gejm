@@ -11,7 +11,7 @@ export default class PlatformFilter extends Component {
     }
 
     componentDidMount() {
-        fetch('http://gejm.pl/api/platforms')
+        fetch(`/sites/gejm/public/api/platforms`)
             .then(response => response.json())
             .then((result) => {
                 console.log(result);
@@ -35,7 +35,7 @@ export default class PlatformFilter extends Component {
                 <section className="platform-filter">
                 {
                     this.state.platforms.map( (platform, key) => (
-                        <span className="platform-filter__name" key={key}>
+                        <span name={platform.name} className="platform-filter__name" key={key}>
                             {platform.name}&nbsp;                  
                         </span>
                     ))

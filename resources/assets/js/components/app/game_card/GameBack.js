@@ -17,7 +17,7 @@ export default class GameBack extends Component {
 
                             <div className="genres-badge genres-badge--yellow">
                                 <div className="genres-badge__circle">
-                                    <img src="/images/genres/adventure2.png" />    
+                                    <img src="/sites/gejm/public/images/genres/adventure2.png" />    
                                 </div>
                                 <div className="genres-badge__ribbon">
                                     <span>{this.props.mainGenre}</span>   
@@ -29,23 +29,44 @@ export default class GameBack extends Component {
                         {/* TODO include content below in component */}
                         <div className="numbers">
                             <div className="numbers__info">
-                                <img src="/images/calendar.png"/>
+                                <img src="/sites/gejm/public/images/calendar.png"/>
                                 <p>{this.props.releaseYear}</p> 
                             </div>
                             <div className="numbers__info">
-                                <img src="/images/clock.png"/>
+                                <img src="/sites/gejm/public/images/clock.png"/>
                                 <p>{this.props.gameTime}h</p> 
                             </div>
                             <div className="numbers__info">
-                                <img src="/images/people.png"/>
+                                <img src="/sites/gejm/public/images/people.png"/>
                                 <p>1-3</p> 
                             </div>   
                         </div>
 
-                        <div className="icon-ratings"> 
-                            <RatingBar itemId={this.props.id} id="popularity" class="heart" label="Popularność" content="♡♡♡♡♡" value={this.props.popularity}  amount="5"/>
-                            <RatingBar itemId={this.props.id} id="difficulty" class="skull" label="Trudność" content="☠☠☠☠☠" value={this.props.difficulty} amount="5"/>
-                            <RatingBar itemId={this.props.id} id="requirements" class="computer" label="Wymagania" content="🖳🖳🖳🖳🖳" value={this.props.requirements} amount="5" />
+                        <div className="rating-bars-box"> 
+                            <RatingBar 
+                                itemId={this.props.slug} 
+                                barId="popularity" 
+                                stylingClass="heart" 
+                                label="Popularność" 
+                                iconClass='fas fa-heart' 
+                                value={this.props.popularity} 
+                                amount={5}/>
+                            <RatingBar 
+                                itemId={this.props.slug} 
+                                barId="difficulty" 
+                                stylingClass="skull" 
+                                label="Trudność" 
+                                iconClass="fas fa-skull" 
+                                value={this.props.difficulty} 
+                                amount={5}/>
+                            <RatingBar 
+                                itemId={this.props.slug}
+                                barId="requirements"
+                                stylingClass="desktop" 
+                                label="Wymagania" 
+                                iconClass="fas fa-desktop" 
+                                value={this.props.requirements} 
+                                amount={5} />
                         </div>
                         <div className="genres">
                             {this.props.genres.map((genre, key) => (
@@ -55,7 +76,9 @@ export default class GameBack extends Component {
                     </div>
                 </div>
                 <TitleToDetails 
-                    title={this.props.title} 
+                    title={this.props.title}
+                    developer={this.props.developer}
+                    publisher={this.props.publisher}
                     id={this.props.id} 
                     slug={this.props.slug}
                     style={this.props.titleStyle} />

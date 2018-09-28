@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import FilterButton from './FilterButton';
 import PlatformFilter from './PlatformFilter';
 import GenresFilter from './GenresFilter';
-import AlphabeticFilter from './AlphabeticFilter';
+import SortingFilter from './SortingFilter';
 
 export default class Filters extends Component {
     render() {
@@ -20,9 +20,12 @@ export default class Filters extends Component {
             <div>
                 <FilterButton />
                 <section className="filters-container">
-                    <PlatformFilter />
-                    <GenresFilter />
-                    <AlphabeticFilter columns={this.props.columns} names={columnNames} />
+                    <form className="filters-container__form">
+                        <PlatformFilter />
+                        <GenresFilter />
+                        <SortingFilter columns={this.props.columns} names={columnNames} />
+                        <input type="submit" value="Filtruj" />
+                    </form>
                 </section>
             </div>
             

@@ -11,7 +11,7 @@ export default class GenresFilter extends Component {
     }
 
     componentDidMount() {
-        fetch('http://gejm.pl/api/genres')
+        fetch(`/sites/gejm/public/api/genres`)
             .then(response => response.json())
             .then((result) => {
                 console.log(result);
@@ -35,7 +35,7 @@ export default class GenresFilter extends Component {
                 <section className="genres-filter">
                 {
                     this.state.genres.map( (genre, key) => (
-                        <span className="genres-filter__name" key={key}>
+                        <span name={genre.name} className="genres-filter__name" key={key}>
                             {genre.name}&nbsp;                  
                         </span>
                     ))

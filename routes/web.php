@@ -181,6 +181,8 @@ Route::middleware('auth')->group(function() {
     
 });
 
+Route::view('/login', 'dashboard');
+
 Route::get('{any}', function () {
     return view('app');
 })->where('any','.*');

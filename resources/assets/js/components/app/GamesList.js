@@ -14,7 +14,7 @@ class GamesList extends Component {
 
     componentDidMount() {
         document.title = "Gejm | Tanie granie";
-        fetch('http://gejm.pl/api/games')
+        fetch(`/sites/gejm/public/api/games`)
             .then(response => response.json())
             .then(
                 (result) => {
@@ -46,7 +46,7 @@ class GamesList extends Component {
     
                         {games.map(game => (
                              
-                                <li key={game.id}>
+                                <li key={game.id} id={game.slug}>
                                     <Game game={game} />                                    
                                 </li>
                          ))}

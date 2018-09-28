@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GameFront from './GameFront';
 import GameBack from './GameBack';
 import RatingBadge from './RatingBadge';
+import PropTypes from 'prop-types';
 
 export default class Game extends Component {
     constructor(props) {
@@ -60,6 +61,8 @@ export default class Game extends Component {
                             id={game.id} 
                             slug={game.slug} 
                             title={game.title}
+                            developer={game.developer}
+                            publisher={game.publisher}
                             ratingAvg={game.rating_avg} 
                             image_box={game.image_box} 
                             titleStyle={this.getGenreStyleClass()} />
@@ -68,6 +71,8 @@ export default class Game extends Component {
                             id={game.id} 
                             slug={game.slug} 
                             title={game.title}
+                            developer={game.developer}
+                            publisher={game.publisher}
                             mainGenre={game.main_genre}
                             genres={game.genres}
                             ratingAvg={game.rating_avg}
@@ -82,4 +87,8 @@ export default class Game extends Component {
             </div>
         )
     }
+}
+
+Game.propTypes = {
+    game: PropTypes.object
 }

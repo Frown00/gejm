@@ -53,4 +53,8 @@ class GamesAPIController extends Controller
 
         return response($game, 200)->header('Content-Type', 'application/json');
     }
+
+    public function filterBy(Request $request) {
+        
+    }
 }

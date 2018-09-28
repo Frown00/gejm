@@ -81,6 +81,15 @@ section.filters-container {
     border-bottom: 1px solid #c0c0c0;
   }
   
+  .filters-container__form {
+    
+    input[type="submit"] {
+      margin: 1em 0 1em 0;
+      padding: 0.5em 1em 0.5em 1em;
+      position: absolute;
+      right: 1em;
+    }
+  }
 }
 
 section.platform-filter {
@@ -120,12 +129,12 @@ section.genres-filter {
   }
 }
 
-section.alphabetic-filter {
+section.sorting-filter {
   display: flex;
   flex-wrap: wrap;
   white-space: nowrap;
   justify-content: center;
-  .alphabetic-filter__column {
+  .sorting-filter__column {
     flex: 1 1 100px;
     margin-top: 1em;
     background: #fff;
@@ -205,6 +214,7 @@ ul.list {
 
           .game__title {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             
@@ -214,6 +224,25 @@ ul.list {
             
             color: $font-dark;
             background-color: $title-default;
+            font-size: 1.5em;
+            &:hover {
+              text-decoration: none;
+            }
+            
+            h1 {
+              margin: 0;
+              font-size: 1em;
+            }
+
+            h2 {
+              margin: 0.3em 0 0 0;
+              font-size: 0.8em;
+            }
+
+            h3 {
+              margin: 0;
+              font-size: 0.6em;
+            }
 
             &--adventure {    // Przygodowy
               background-color: $adventure;
@@ -248,15 +277,16 @@ ul.list {
 .game-heading {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  background: rgb(119, 119, 119);
-
+  padding: 5px 10px 20px 10px;
+  background: black;
+  border-bottom: 5px solid lightgray;
   .main-genre {
     width: 100px;
     max-width: 100px;
     display: flex;
     justify-content: flex-end;
     margin-right: 20px;
+    margin-top: -10px;
 	  text-align: center;  
   }
 }
@@ -308,6 +338,9 @@ ul.list {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: black;
+  color: white;
+  height: $card-data-y;
 }
 
 .numbers {
@@ -333,87 +366,64 @@ ul.list {
 }
 
 // icon data visualization
-.icon-ratings {
-  font-size: 1rem;
-  padding: 5px 30px 5px 30px;
-  line-height: 1.1;
-  border-bottom: 1px solid lightgray;
+.rating-bars-box {
   width: 90%;
-  display: flex;
-  flex-direction: column;
-  .data-icon {
+  padding: 5px 30px 5px 30px;
+  border-bottom: 1px solid lightgray;
+  div p:first-child {
+    margin: 0;
+    font-size: 0.7em;
+  }
+  .rating-bar {
+    display: flex;
     position: relative;
-    display: inline-block;
-    color: transparent;
-    white-space: nowrap;
-
-    font-size: 1.5em; // xem * 16px 
-    width: 5 * 1em; // 1em = current font-size
-    overflow: hidden;
-    &.computer {
-      letter-spacing: 0.066em;
+    width: 6em;
+    font-size: 1em; // change this
+    margin: 0.3em 0 0.3em 0;
+  
+    .rating-bar__template {
+      box-sizing: content-box;
+      display: flex;
+      width: 100%;
+      border: 2px solid black;
+      color: lightgray;
     }
   
-    &.computer:before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      content: '🖳🖳🖳🖳🖳';
-      color: darkgray;
-      white-space: nowrap;
+    .heart-spacing, .skull-spacing {
+      letter-spacing: 0.25em;
+    }
+    
+    .desktop-spacing {
+      letter-spacing: 0.1em;
     }
   
-    &.computer:after {
+    .rating-bar__fillable {
+      display: flex;
       position: absolute;
-      top: 0;
-      left: 0;
-      content: '🖳🖳🖳🖳🖳';
-      color: blue;
-      background-color: #a1a1ff;
+      width: 0;
       overflow: hidden;
-    }
-  
-    &.skull:before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      content: '☠☠☠☠☠';
-      color: darkgray;
-    }
-  
-    &.skull:after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      content: '☠☠☠☠☠';
-      color: black;
-      background-color: #bdbdbd;
-      overflow: hidden;
-    }
-  
-    &.heart {
-      letter-spacing: 0.4em;
-    }
-
-    &.heart:before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      content: '♡♡♡♡♡';
-      color: darkgray;
-    }
-  
-    &.heart:after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      content: '♡♡♡♡♡';
-      color: red;
-      background-color: #ff9191;
-      overflow: hidden;
-    }
+      box-sizing: content-box;
+      &--heart {
+        color: #fd3f3f;
+        background: #c00202;
+        border: 2px solid #fc0303;
+      }
+      
+      &--skull {
+        color: #ffff5c;
+        background: #e0e000;
+        border: 2px solid #ffff42;
+      }
+      
+      &--desktop {
+        color: #47b9ff;
+        background: #0071b8;
+        border: 2px solid #47b9ff;
+      }
+    }  
   }
 }
+
 
 .genres {
 
@@ -447,11 +457,6 @@ ul.list {
   &:after {
     transform: rotate(-60deg);
   }
-
-  &:hover {
-    top: -4px;
-  }
-
 
   .genres-badge__circle {
     width: 50px;

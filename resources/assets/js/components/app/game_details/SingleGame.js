@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class SingleGame extends Component {
+export default class SingleGame extends Component {
 
     constructor(props) {
         super(props);
@@ -12,7 +12,7 @@ class SingleGame extends Component {
 
     componentDidMount() {
         const gameId = this.props.match.params.id;
-        fetch(`/api/games/${gameId}`)
+        fetch(`/sites/gejm/public/api/games/${gameId}`)
             .then(response => {
                 return response.json();
             })
@@ -21,7 +21,7 @@ class SingleGame extends Component {
                 this.setState({ game });
 
                 document.title = "Gejm | " + game.title;
-                document.getElementById('cover-image').src = '/storage/upload/game-images/' + game.image_box.path;
+                document.getElementById('cover-image').src = '/sites/gejm/public/storage/upload/game-images/' + game.image_box.path;
             });
     }
 
@@ -31,7 +31,7 @@ class SingleGame extends Component {
         return (
             <main>
                 <div>
-                    <img id="cover-image" alt={'Image cover of ' + game.title}/>
+                    <img id="cover-image" alt={'Image cover of ' + "game"}/>
                 </div>
                 <h1>{game.title}</h1>
             </main>
@@ -39,4 +39,4 @@ class SingleGame extends Component {
     }
 }
 
-export default SingleGame;
+

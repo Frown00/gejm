@@ -5,7 +5,8 @@ import Navbar from './Navbar';
     const Header = () => (
       <header className="site-header">
         <div>
-            <Link to='/'><img className="logo" src="/images/gejm_logo1.svg" alt="Logo strony"/></Link>
+          {/* CHANGE TO DOMAIN */}
+            <Link to='/sites/gejm/public'><img className="logo" src="http://localhost:8000/sites/gejm/public/images/gejm_logo1.svg" alt="Logo strony"/></Link>
         </div>
         <Navbar />
       </header>
