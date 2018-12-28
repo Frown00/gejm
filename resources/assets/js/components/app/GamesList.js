@@ -21,14 +21,15 @@ class GamesList extends Component {
                 this.setState({ 
                     isLoaded: true,
                     games: result });
-            }, 
-            (error) => {
-                this.setState({
-                    isLoaded: true,
-                    error
-                });
-            }
-        );
+                }, 
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+            
     }
 
     render() {
@@ -39,6 +40,7 @@ class GamesList extends Component {
         else if(!isLoaded) {
             return <div>Loading...</div>
         } else {
+            console.log(this.state.games);
             return(
                 <div>
                     <Filters columns={Object.keys(games[0])}/>
@@ -47,7 +49,7 @@ class GamesList extends Component {
                         {games.map(game => (
                              
                                 <li key={game.id} id={game.slug}>
-                                    <Game game={game} />                                    
+                                    <Game game={game} />                                 
                                 </li>
                          ))}
                     </ul>    

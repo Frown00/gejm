@@ -10492,7 +10492,7 @@ body {
   position: fixed;
   font-size: 1em;
   font-weight: 900;
-  top: 75px;
+  top: 80px;
   right: 10px;
   z-index: 4;
   padding: 0.5em 1.5em 0.5em 1.5em;
@@ -10503,14 +10503,12 @@ section.filters-container {
   background: whitesmoke;
   position: fixed;
   width: 100%;
-  top: 73px;
+  top: 70px;
   z-index: 3;
   display: none;
-  height: calc(100% - 73px);
+  height: calc(100% - 70px);
   max-height: 100%;
   overflow-y: scroll;
-  -webkit-animation: slide-up .5s ease-out;
-          animation: slide-up .5s ease-out;
 }
 
 section.filters-container--active {
@@ -10609,7 +10607,7 @@ section.filters-container--active {
 }
 
 section.filters-container div:nth-child(1) {
-  margin-top: 3em;
+  margin-top: 2.5em;
 }
 
 section.filters-container div {
@@ -10621,11 +10619,15 @@ section.filters-container div {
   border-bottom: 1px solid #c0c0c0;
 }
 
+section.filters-container .filters-container__form {
+  width: 90%;
+}
+
 section.filters-container .filters-container__form input[type="submit"] {
+  width: 100%;
   margin: 1em 0 1em 0;
   padding: 0.5em 1em 0.5em 1em;
-  position: absolute;
-  right: 1em;
+  position: relative;
 }
 
 section.platform-filter {
@@ -11141,5 +11143,118 @@ ul.list .container .scene .game.is-flipped {
   background: -webkit-gradient(linear, left top, right bottom, from(#ffeb3b), to(#fbc02d));
   background: linear-gradient(to bottom right, #ffeb3b 0%, #fbc02d 100%);
   color: #ffb300;
+}
+
+.platform--android {
+  background: lightgreen;
+}
+
+.platform--ps3 {
+  background: lightblue;
+}
+
+.platform--ps4 {
+  background: lightskyblue;
+}
+
+.platform--pc {
+  background: lightslategrey;
+}
+
+.platform--ios {
+  background: lightcyan;
+}
+
+.platform--xbox360 {
+  background: lightyellow;
+}
+
+.platform--xbox-one {
+  background: lightgoldenrodyellow;
+}
+
+.platform--linux {
+  background: lightcoral;
+}
+
+.platform--normal {
+  background: whitesmoke;
+}
+
+main.single-game-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  margin-top: 1em;
+  padding: 0.5em;
+}
+
+main.single-game-container .leftbar-info {
+  -webkit-box-flex: 3;
+      -ms-flex: 3 1;
+          flex: 3 1;
+}
+
+main.single-game-container .leftbar-info h1 {
+  font-size: 1.5em;
+}
+
+main.single-game-container .leftbar-info div p {
+  font-size: 1em;
+  margin: 1em 0 0.2em 0;
+}
+
+main.single-game-container .leftbar-info ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  white-space: nowrap;
+  padding: 0;
+  list-style: none;
+}
+
+main.single-game-container .leftbar-info ul li {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 80px;
+          flex: 0 1 80px;
+  font-size: 0.8em;
+  text-align: center;
+  padding: 0.5em;
+  margin: 0.1em;
+}
+
+main.single-game-container .rightbar-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0;
+          flex: 1 0;
+  margin: 0 1em 0 1em;
+  text-align: center;
+}
+
+main.single-game-container .rightbar-info img {
+  width: 150px;
+}
+
+main.single-game-container .rightbar-info div p:first-child {
+  font-weight: 900;
+  text-decoration: underline;
+  margin-bottom: 0;
+}
+
+main.single-game-container .rightbar-info div p:nth-child(2) {
+  color: #333333;
 }
 

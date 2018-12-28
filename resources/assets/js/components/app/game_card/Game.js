@@ -57,30 +57,12 @@ export default class Game extends Component {
             <div className="container">
                 <div className="scene scene--game">
                     <div className="game" onClick={this.gameIsFlipped}>
-                        <GameFront 
-                            id={game.id} 
-                            slug={game.slug} 
-                            title={game.title}
-                            developer={game.developer}
-                            publisher={game.publisher}
-                            ratingAvg={game.rating_avg} 
-                            image_box={game.image_box} 
+                        <GameFront
+                            game={game} 
                             titleStyle={this.getGenreStyleClass()} />
                         
                         <GameBack 
-                            id={game.id} 
-                            slug={game.slug} 
-                            title={game.title}
-                            developer={game.developer}
-                            publisher={game.publisher}
-                            mainGenre={game.main_genre}
-                            genres={game.genres}
-                            ratingAvg={game.rating_avg}
-                            gameTime={game.game_time}
-                            releaseYear={game.release_year}
-                            popularity={game.popularity}
-                            difficulty={game.difficulty}
-                            requirements={game.requirements}
+                            game={game}
                             titleStyle={this.getGenreStyleClass()} />     
                     </div>
                 </div>

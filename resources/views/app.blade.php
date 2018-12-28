@@ -109,9 +109,7 @@
     <script src="{{ asset('js/scripts.js') }}"></script>
 </head>
 <body>
-    
-    <div id="root"></div>
-    
+    <div id="root"></div>    
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

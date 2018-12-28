@@ -7,11 +7,12 @@ export default class GameBack extends Component {
     
     
     render() {
+        const {game, titleStyle} = this.props;
         return (
             <div className="game__data game__data--back">
                 <div className="game__info">
                     <div className="game-heading">
-                        <RatingBadge value={this.props.ratingAvg} />
+                        <RatingBadge value={game.rating_avg} />
                         <div className="main-genre">
                         {/* TODO include content below in component */}
 
@@ -20,7 +21,7 @@ export default class GameBack extends Component {
                                     <img src="/sites/gejm/public/images/genres/adventure2.png" />    
                                 </div>
                                 <div className="genres-badge__ribbon">
-                                    <span>{this.props.mainGenre}</span>   
+                                    <span>{game.main_genre}</span>   
                                 </div>
                             </div>
                         </div>
@@ -30,11 +31,11 @@ export default class GameBack extends Component {
                         <div className="numbers">
                             <div className="numbers__info">
                                 <img src="/sites/gejm/public/images/calendar.png"/>
-                                <p>{this.props.releaseYear}</p> 
+                                <p>{game.release_year}</p> 
                             </div>
                             <div className="numbers__info">
                                 <img src="/sites/gejm/public/images/clock.png"/>
-                                <p>{this.props.gameTime}h</p> 
+                                <p>{game.game_time}h</p> 
                             </div>
                             <div className="numbers__info">
                                 <img src="/sites/gejm/public/images/people.png"/>
@@ -44,44 +45,40 @@ export default class GameBack extends Component {
 
                         <div className="rating-bars-box"> 
                             <RatingBar 
-                                itemId={this.props.slug} 
+                                itemId={game.slug} 
                                 barId="popularity" 
                                 stylingClass="heart" 
                                 label="Popularność" 
                                 iconClass='fas fa-heart' 
-                                value={this.props.popularity} 
+                                value={game.popularity} 
                                 amount={5}/>
                             <RatingBar 
-                                itemId={this.props.slug} 
+                                itemId={game.slug} 
                                 barId="difficulty" 
                                 stylingClass="skull" 
                                 label="Trudność" 
                                 iconClass="fas fa-skull" 
-                                value={this.props.difficulty} 
+                                value={game.difficulty} 
                                 amount={5}/>
                             <RatingBar 
-                                itemId={this.props.slug}
+                                itemId={game.slug}
                                 barId="requirements"
                                 stylingClass="desktop" 
                                 label="Wymagania" 
                                 iconClass="fas fa-desktop" 
-                                value={this.props.requirements} 
+                                value={game.requirements} 
                                 amount={5} />
                         </div>
                         <div className="genres">
-                            {this.props.genres.map((genre, key) => (
+                            {game.genres.map((genre, key) => (
                                 <span key={key}>{genre.name} </span>
                             ))}
                         </div>
                     </div>
                 </div>
                 <TitleToDetails 
-                    title={this.props.title}
-                    developer={this.props.developer}
-                    publisher={this.props.publisher}
-                    id={this.props.id} 
-                    slug={this.props.slug}
-                    style={this.props.titleStyle} />
+                    game={game}
+                    style={titleStyle} />
             </div>
         )
     }
